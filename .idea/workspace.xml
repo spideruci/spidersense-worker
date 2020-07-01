@@ -87,6 +87,6 @@
     <state x="591" y="178" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1593567109658" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="worker-server Coverage Results" MODIFIED="1593567055215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="worker-server Coverage Results" MODIFIED="1593567413600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
