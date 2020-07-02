@@ -1,16 +1,7 @@
 from flask import Flask
 from flask_graphql import GraphQLView
-import graphene
-import pymysql
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
-import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, foreign
 import schema
 import models
 from sqlalchemy.ext.declarative import declarative_base

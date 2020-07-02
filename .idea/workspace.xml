@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="version demo">
+      <change afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worker-server.py" beforeDir="false" afterPath="$PROJECT_DIR$/worker-server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +43,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1e42yxpqVJCa10rp6RgKlQTh3fM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -28,9 +52,76 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.utils">
+    <configuration name="spidersense-worker" type="PythonConfigurationType" factoryName="Python">
+      <module name="spidersense-worker" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/worker-server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="spidersense-worker" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="worker-main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="spidersense-worker" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/worker-main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="worker-server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="spidersense-worker" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -55,6 +146,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.utils" />
+        <item itemvalue="Python.worker-main" />
         <item itemvalue="Python.worker-server" />
       </list>
     </recent_temporary>
@@ -69,24 +162,75 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1593566802167</updated>
-      <workItem from="1593566803298" duration="535000" />
+      <workItem from="1593566803298" duration="1339000" />
+      <workItem from="1593620998825" duration="17040000" />
+      <workItem from="1593649677096" duration="1611000" />
     </task>
+    <task id="LOCAL-00001" summary="version demo">
+      <created>1593567402017</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1593567402017</updated>
+    </task>
+    <task id="LOCAL-00002" summary="version demo">
+      <created>1593567463088</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1593567463088</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="version demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="version demo" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="515" y="78" key="SettingsEditor" timestamp="1593567037095">
+    <state width="1801" height="216" key="GridCell.Tab.0.bottom" timestamp="1593651083415">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1593567037095" />
-    <state x="591" y="178" key="Vcs.Push.Dialog.v2" timestamp="1593567109658">
+    <state width="1801" height="216" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1593651083415" />
+    <state width="1801" height="216" key="GridCell.Tab.0.center" timestamp="1593651083413">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1593567109658" />
+    <state width="1801" height="216" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1593651083413" />
+    <state width="1801" height="216" key="GridCell.Tab.0.left" timestamp="1593651083412">
+      <screen x="65" y="24" width="1853" height="864" />
+    </state>
+    <state width="1801" height="216" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1593651083412" />
+    <state width="1801" height="216" key="GridCell.Tab.0.right" timestamp="1593651083414">
+      <screen x="65" y="24" width="1853" height="864" />
+    </state>
+    <state width="1801" height="216" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1593651083414" />
+    <state x="515" y="78" key="SettingsEditor" timestamp="1593621451272">
+      <screen x="65" y="24" width="1853" height="864" />
+    </state>
+    <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1593621451272" />
+    <state x="591" y="178" key="Vcs.Push.Dialog.v2" timestamp="1593567482205">
+      <screen x="65" y="24" width="1853" height="864" />
+    </state>
+    <state x="591" y="178" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1593567482205" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="worker-server Coverage Results" MODIFIED="1593567413600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$worker_main.coverage" NAME="worker-main Coverage Results" MODIFIED="1593649709551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$utils.coverage" NAME="utils Coverage Results" MODIFIED="1593651083402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="worker-server Coverage Results" MODIFIED="1593643243227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

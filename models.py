@@ -67,3 +67,8 @@ class Coverage(Base):
     testcaseId = Column(Integer(), ForeignKey('testcase.testcaseId'), primary_key=True)
     testcase = relationship('TestCase', primaryjoin=(testcaseId == foreign(TestCase.testcaseId)), uselist=False)
     line = relationship('Line', primaryjoin=(lineId == foreign(Line.lineId)), uselist=False)
+
+# class Test(Base):
+#     __tablename__='cov-test'
+#     lineId = Column(Integer(), primary_key=True)
+#     testcaseId = Column(Integer(), primary_key=True)
