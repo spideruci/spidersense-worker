@@ -11,7 +11,7 @@ import utils
 from sqlalchemy.ext.declarative import declarative_base
 
 from github_webhook import Webhook
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'#change this to your own sql connection
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -41,11 +41,11 @@ def operate_proj(git):
         utils.database_operation(projId, buildId, jsonpath, session)
     os.system('rm -rf /home/dongxinxiang/tacoco/tacoco_output/*')
 
-if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
-    os.system('rm -rf /home/dongxinxiang/demo/*')
-    projList=cf.get('webhook-proj','proj-list').split(',')
-    for proj in projList:
-        operate_proj(proj)
+# if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
+#     os.system('rm -rf /home/dongxinxiang/demo/*')
+#     projList=cf.get('webhook-proj','proj-list').split(',')
+#     for proj in projList:
+#         operate_proj(proj)
 
 
 @webhook.hook()        # Defines a handler for the 'push' event

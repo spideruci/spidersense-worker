@@ -17,18 +17,9 @@ def build(git):
     tacocopath = cf.get('filepath', 'tacoco-path')
     name = git.split('/')[-1].split('.')[0]
     projpath = '/home/dongxinxiang/demo/' + name
-    op='git clone '+git+' '+projpath
-    os.system(op)
-    commit = subprocess.Popen('git ls-remote '+git+' HEAD', shell=True,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0].decode().split('\t')[0]
-    scriptpath = cf.get('filepath', 'run-tacoco-path')
-    os.chdir(projpath)
-    os.system('mvn compile test-compile')
-    command = scriptpath + ' ' + projpath + ' ' + tacocopath
-    os.system(command)
-
-    exist=True
-
+    commit = subprocess.Popen('git ls-remote ' + git + ' HEAD', shell=True,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0].decode().split('\t')[0]
+    exist = True
     if session.query(exists().where(models.Project.projectLink==git)).scalar()==False:
         newProj = models.Project(projectName=name, projectLink=git)
         session.add(newProj)
@@ -41,7 +32,16 @@ def build(git):
         session.add(newBuild)
         session.commit()
         exist=False
+        op = 'git clone ' + git + ' ' + projpath
+        os.system(op)
+
+        scriptpath = cf.get('filepath', 'run-tacoco-path')
+        os.chdir(projpath)
+        os.system('mvn compile test-compile')
+        command = scriptpath + ' ' + projpath + ' ' + tacocopath
+        os.system(command)
     buildId=session.query(models.Build).filter(models.Build.commitId == commit,models.Build.projectId==projId).one().buildId
+
     return exist,buildId,projId,name
 
 
