@@ -44,6 +44,8 @@ class Query(graphene.ObjectType):
             query=query.filter(models.Project.projectId==kwargs.get("projectId"))
         if (kwargs.get("projectName")):
             query=query.filter(models.Project.projectName==kwargs.get("projectName"))
+        if (kwargs.get("projectLink")):
+            query=query.filter(models.Project.projectLink==kwargs.get("projectLink"))
         return query.all()
 
     def resolve_builds(self, info, **kwargs):

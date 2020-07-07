@@ -7,6 +7,7 @@ class Project(Base):
     __tablename__ = 'project'
     projectId = Column(Integer(), primary_key=True)
     projectName = Column(String(256))
+    projectLink = Column(String())
     builds = relationship('Build',uselist=True)
     testcase = relationship('TestCase', uselist=True)
 
@@ -30,7 +31,7 @@ class TestCase(Base):
     sourceName = Column(String(256))
     signature = Column(String(256))
     passed = Column(Integer())
-    coveredLines=Column(String())
+    #coveredLines=Column(String())
     project = relationship(
         'Project',
         primaryjoin=(projectId == foreign(Project.projectId)),
@@ -50,7 +51,7 @@ class Line(Base):
     buildId = Column(Integer(), ForeignKey('build.buildId'))
     sourceName = Column(String(256))
     lineNumber = Column(Integer())
-    testcaseIds = Column(String())
+    #testcaseIds = Column(String())
     project = relationship(
         'Project',
         primaryjoin=(projectId == foreign(Project.projectId)),
