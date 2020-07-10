@@ -32,6 +32,7 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
     schema=schema.schema, graphiql=True,get_context=lambda: {'session':session}))
 
 def operate_proj(git):
+    os.system('rm -rf /home/dongxinxiang/demo/*')
     exist, buildId, projId, name = buildProj.build(git)
     print('get '+name)
     if exist == True:
@@ -41,7 +42,7 @@ def operate_proj(git):
         utils.database_operation(projId, buildId, jsonpath, session)
     os.system('rm -rf /home/dongxinxiang/tacoco/tacoco_output/*')
 
-# if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
+# if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
 #     os.system('rm -rf /home/dongxinxiang/demo/*')
 #     projList=cf.get('webhook-proj','proj-list').split(',')
 #     for proj in projList:
@@ -50,7 +51,9 @@ def operate_proj(git):
 
 @webhook.hook()        # Defines a handler for the 'push' event
 def on_push(data):
-    print(data)
+    # print(data['after'])
+    # print(data['repository']['clone_url'])
+    operate_proj(data['repository']['clone_url'])
 
 if __name__ == '__main__':
     app.run()
