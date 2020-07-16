@@ -21,7 +21,9 @@ cf.read('config.ini')
 
 models.Base.metadata.create_all(engine)
 
-#navicat script
+#utils.database_operation(buildId=17,projectId=10,session=session,jsonpath='/home/dongxinxiang/tarantula-cov-matrix.json')
+
+# navicat script
 # ./navicat15-mysql-en.AppImage
 app = Flask(__name__)
 app.debug = True
@@ -43,6 +45,8 @@ def operate_proj(git):
         utils.database_operation(projId, buildId, jsonpath, session)
     os.system('rm -rf /home/dongxinxiang/tacoco/tacoco_output/*')
 
+#utils.database_operation(projectId=13,buildId=21,jsonpath='/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',session=session)
+
 @app.route('/test/project/<projectId>')
 def projQuery(projectId):
     query = "{projects(projectId:"+projectId+"){ projectName projectLink}}"
@@ -52,7 +56,13 @@ def projQuery(projectId):
     print('{}'.format(d))
     return '{}'.format(d)
 
-
+@app.route('/getTaranCoverage')
+def TaranQuery():
+    query = "{builds(buildId:17){ line {lineId lineNumber sourceName coverage { testcase { testcaseId sourceName signature }}}}}"
+    result = schema.dataschema.execute(query,context_value={'session': session})
+    d = json.dumps(result.data)
+    print('{}'.format(d))
+    return '{}'.format(d)
 # if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
 #     os.system('rm -rf /home/dongxinxiang/demo/*')
 #     projList=cf.get('webhook-proj','proj-list').split(',')

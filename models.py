@@ -22,6 +22,7 @@ class Build(Base):
         uselist=False,
     )
     testcase = relationship('TestCase', uselist=True)
+    line = relationship('Line', uselist=True)
 
 class TestCase(Base):
     __tablename__ = 'testcase'

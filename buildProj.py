@@ -45,6 +45,8 @@ def build(git):
     return exist,buildId,projId,name
 
 
+build('https://github.com/spideruci/Tarantula.git')
+
 #
 
 #s=os.system('git ls-remote https://github.com/sunflower0309/jsoup.git HEAD')
