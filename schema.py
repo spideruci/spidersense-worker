@@ -48,6 +48,8 @@ class Query(graphene.ObjectType):
             query=query.filter(models.Project.projectLink==kwargs.get("projectLink"))
         return query.all()
 
+
+
     def resolve_builds(self, info, **kwargs):
         query = BuildQuery.get_query(info)
         if(kwargs.get("projectId")):
@@ -90,4 +92,4 @@ class Query(graphene.ObjectType):
             query = query.filter(models.Coverage.testcaseId == kwargs.get('testcaseId'))
         return query.all()
 
-schema = graphene.Schema(query=Query)
+dataschema = graphene.Schema(query=Query)

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,request
 from flask_graphql import GraphQLView
 import os
 from sqlalchemy import create_engine
@@ -8,6 +8,7 @@ import buildProj
 import models
 import configparser
 import utils
+import json
 from sqlalchemy.ext.declarative import declarative_base
 
 from github_webhook import Webhook
@@ -29,7 +30,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 
 webhook = Webhook(app) # Defines '/postreceive' endpoint
 app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
-    schema=schema.schema, graphiql=True,get_context=lambda: {'session':session}))
+    schema=schema.dataschema,graphiql=True,get_context=lambda: {'session':session}))
 
 def operate_proj(git):
     os.system('rm -rf /home/dongxinxiang/demo/*')
@@ -41,6 +42,16 @@ def operate_proj(git):
         jsonpath = cf.get('filepath', 'cov-matrix-path') + name + '-cov-matrix.json'
         utils.database_operation(projId, buildId, jsonpath, session)
     os.system('rm -rf /home/dongxinxiang/tacoco/tacoco_output/*')
+
+@app.route('/test/project/<projectId>')
+def projQuery(projectId):
+    query = "{projects(projectId:"+projectId+"){ projectName projectLink}}"
+    print(projectId)
+    result = schema.dataschema.execute(query,context_value={'session': session})
+    d = json.dumps(result.data)
+    print('{}'.format(d))
+    return '{}'.format(d)
+
 
 # if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
 #     os.system('rm -rf /home/dongxinxiang/demo/*')

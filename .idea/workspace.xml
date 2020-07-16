@@ -20,7 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="branch for frontend">
+      <change afterPath="$PROJECT_DIR$/utilsfordocker.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/workerServer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -167,6 +169,7 @@
       <workItem from="1594138279467" duration="12778000" />
       <workItem from="1594190293334" duration="1501000" />
       <workItem from="1594243393283" duration="897000" />
+      <workItem from="1594415775168" duration="14611000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -221,22 +224,22 @@
     <option name="LAST_COMMIT_MESSAGE" value="branch for frontend" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1801" height="264" key="GridCell.Tab.0.bottom" timestamp="1594243669115">
+    <state width="1801" height="181" key="GridCell.Tab.0.bottom" timestamp="1594885833683">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="264" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1594243669115" />
-    <state width="1801" height="264" key="GridCell.Tab.0.center" timestamp="1594243669113">
+    <state width="1801" height="181" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1594885833683" />
+    <state width="1801" height="181" key="GridCell.Tab.0.center" timestamp="1594885833682">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="264" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1594243669113" />
-    <state width="1801" height="264" key="GridCell.Tab.0.left" timestamp="1594243669112">
+    <state width="1801" height="181" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1594885833682" />
+    <state width="1801" height="181" key="GridCell.Tab.0.left" timestamp="1594885833681">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="264" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1594243669112" />
-    <state width="1801" height="264" key="GridCell.Tab.0.right" timestamp="1594243669114">
+    <state width="1801" height="181" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1594885833681" />
+    <state width="1801" height="181" key="GridCell.Tab.0.right" timestamp="1594885833682">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="264" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1594243669114" />
+    <state width="1801" height="181" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1594885833682" />
     <state x="515" y="78" key="SettingsEditor" timestamp="1593621451272">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
@@ -250,6 +253,6 @@
     <SUITE FILE_PATH="coverage/spidersense_worker$worker_main.coverage" NAME="worker-main Coverage Results" MODIFIED="1594145025827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$utils.coverage" NAME="utils Coverage Results" MODIFIED="1593714086274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="workerServer Coverage Results" MODIFIED="1594164393177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/spidersense_worker$workerServer.coverage" NAME="workerServer Coverage Results" MODIFIED="1594243668982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$workerServer.coverage" NAME="workerServer Coverage Results" MODIFIED="1594885833665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
