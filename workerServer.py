@@ -58,7 +58,32 @@ def projQuery(projectId):
 
 @app.route('/getTaranCoverage')
 def TaranQuery():
-    query = "{builds(buildId:17){ line {lineId lineNumber sourceName coverage { testcase { testcaseId sourceName signature }}}}}"
+    query = "{builds(buildId:25){ line {lineId lineNumber sourceName coverage { testcase { testcaseId sourceName signature }}}}}"
+    result = schema.dataschema.execute(query,context_value={'session': session})
+    d = json.dumps(result.data)
+    print('{}'.format(d))
+    return '{}'.format(d)
+
+@app.route('/testcaseCoverage/<testcaseId>')
+def TestcaseQuery(testcaseId):
+    query = "{testcases(testcaseId:"+testcaseId+"){signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
+    result = schema.dataschema.execute(query,context_value={'session': session})
+    d = json.dumps(result.data)
+    print('{}'.format(d))
+    return '{}'.format(d)
+
+@app.route('/lineCoverage/<lineId>')
+def LineQuery(lineId):
+    query = "{lines(lineId:"+lineId+"){lineNumber sourceName coverage{testcase{testcaseId signature sourceName}}}}"
+    result = schema.dataschema.execute(query,context_value={'session': session})
+    d = json.dumps(result.data)
+    print('{}'.format(d))
+    return '{}'.format(d)
+
+@app.route('/sourceCoverage/<sourceFile>')
+def sourceQuery(sourceFile):
+    query = '{lines(sourceName:"'+sourceFile+'"){lineId lineNumber coverage{testcase{testcaseId signature sourceName}}}}'
+    print(query)
     result = schema.dataschema.execute(query,context_value={'session': session})
     d = json.dumps(result.data)
     print('{}'.format(d))
@@ -69,7 +94,7 @@ def TaranQuery():
 #     for proj in projList:
 #         operate_proj(proj)
 
-
+#utils.database_operation(projectId=17,buildId=25,jsonpath='/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',session=session)
 @webhook.hook()        # Defines a handler for the 'push' event
 def on_push(data):
     # print(data['after'])

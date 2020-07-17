@@ -7,7 +7,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import exists
 cf = configparser.ConfigParser()
 cf.read('config.ini')
-
+tacocopath = cf.get('filepath', 'tacoco-path')
+print(tacocopath)
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)

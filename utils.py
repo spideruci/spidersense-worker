@@ -27,7 +27,7 @@ def database_operation(projectId,buildId,jsonpath,session):
         #
         sourceList = dict_data['sources']
         for src in sourceList:
-            fullname=src['source']['fullName']
+            fullname=src['source']['fullName'].replace('/','.')
             startLine=src['source']['firstLine']
             coverableLines=src['coverableLines']
             lines = []
@@ -100,7 +100,7 @@ def database_operation(projectId,buildId,jsonpath,session):
         # print(lineIdandTestcases)
 
         for src in sourceList:
-            fullname = src['source']['fullName']
+            fullname = src['source']['fullName'].replace('/','.')
             startLine = src['source']['firstLine']
             covlist = []
             activeTests = src['activatingTests']  # index in the list
