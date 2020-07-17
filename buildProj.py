@@ -45,7 +45,7 @@ def build(git):
     return exist,buildId,projId,name
 
 
-build('https://github.com/spideruci/Tarantula.git')
+#build('https://github.com/spideruci/Tarantula.git')
 
 #
 
