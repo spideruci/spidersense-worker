@@ -33,17 +33,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 webhook = Webhook(app) # Defines '/postreceive' endpoint
 app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
     schema=schema.dataschema,graphiql=True,get_context=lambda: {'session':session}))
-
-def operate_proj(git):
-    os.system('rm -rf /home/dongxinxiang/demo/*')
+docker_num=1
+def operate_proj(git,commit):
     exist, buildId, projId, name = buildProj.build(git)
     print('get '+name)
     if exist == True:
         pass
     else:
-        jsonpath = cf.get('filepath', 'cov-matrix-path') + name + '-cov-matrix.json'
-        utils.database_operation(projId, buildId, jsonpath, session)
-    os.system('rm -rf /home/dongxinxiang/tacoco/tacoco_output/*')
+
+
 
 #utils.database_operation(projectId=13,buildId=21,jsonpath='/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',session=session)
 
@@ -99,7 +97,7 @@ def sourceQuery(sourceFile):
 def on_push(data):
     # print(data['after'])
     # print(data['repository']['clone_url'])
-    operate_proj(data['repository']['clone_url'])
+    operate_proj(data['repository']['clone_url'],data['after'])
 
 if __name__ == '__main__':
     app.run()
