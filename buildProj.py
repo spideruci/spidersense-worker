@@ -15,7 +15,6 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 def build(git,commit):
-    tacocopath = cf.get('filepath', 'tacoco-path')
     name = git.split('/')[-1].split('.')[0]
 
     exist = True
@@ -24,7 +23,6 @@ def build(git,commit):
         session.add(newProj)
         session.commit()
         exist=False
-    projpath = '/home/dongxinxiang/demo/' + name+commit
     projId = session.query(models.Project).filter(models.Project.projectLink == git).one().projectId
     buildQuery=session.query(models.Build).filter(models.Build.commitId==commit,models.Build.projectId==projId)
     if session.query(buildQuery.exists()).scalar() == False:
