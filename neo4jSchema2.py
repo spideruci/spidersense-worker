@@ -3,10 +3,18 @@ import neo4jModels
 
 
 class TestcaseSchema2(graphene.ObjectType):
-    testcaseid=graphene.String()
+    testcaseid = graphene.String()
+    projectId = graphene.String()
+    buildId = graphene.String()
+    signature = graphene.String()
+    sourcename = graphene.String()
 
 class LineSchema2(graphene.ObjectType):
-    lineid=graphene.String()
+    lineid = graphene.String()
+    projectId = graphene.String()
+    buildId = graphene.String()
+    linenumber = graphene.String()
+    sourcename = graphene.String()
     covered = graphene.List(TestcaseSchema2)
     def resolve_covered(self, info):
         return neo4jModels.Line().match(neo4jModels.graph).where(

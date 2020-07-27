@@ -88,21 +88,29 @@ def make_csv(x,y):
     user ='root', password ='313461',
     database ='spider-worker')
     cursor = conn.cursor()
-    # sql='select testcaseId from testcase;'
-    # cursor.execute(sql)
-    # testcases=cursor.fetchall()
-    # tt=[['t'+str(list(t)[0])]+['Testcase'] for t in testcases]
-    # l1 = ['testcaseid:ID', ':LABEL']
-    # file1 = pd.DataFrame(data=tt, columns=l1)
-    # file1.to_csv('/home/dongxinxiang/testcase.csv')
-    #print(tt[0:3])
+    sql='select * from testcase;'
+    cursor.execute(sql)
+    testcases=cursor.fetchall()
+
+    tt=[['t'+str(list(t)[0])]+[str(list(t)[1])]+[str(list(t)[2])]+[str(list(t)[3])]+[str(list(t)[4])]+['Testcase'] for t in testcases]
+    l1 = ['testcaseid:ID', 'projectId','buildId','sourcename','signature',':LABEL']
+    with open('/home/dongxinxiang/testcase.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(l1)
+        writer.writerows(tt)
 
 
 
-    # sql2 = 'select lineId from line;'
-    # cursor.execute(sql2)
-    # lines=cursor.fetchall()
-    # ll=[[str(list(l)[0])]+['Line'] for l in lines]
+
+    sql2 = 'select * from line;'
+    cursor.execute(sql2)
+    lines=cursor.fetchall()
+    ll=[[str(list(l)[0])]+[str(list(l)[1])]+[str(list(l)[2])]+[str(list(l)[3])]+[str(list(l)[1])]+['Line'] for l in lines]
+    l1 = ['lineid:ID','projectId', 'buildId','sourcename','linenumber',':LABEL']
+    with open('/home/dongxinxiang/line.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(l1)
+        writer.writerows(ll)
 
     # milestone=[19279,29279,39279,49279,59279,69279,79279,89279,95502]
     # for x in range(len(milestone)-1):
@@ -111,16 +119,20 @@ def make_csv(x,y):
     #     cov = cursor.fetchall()
     #     cc = [['t' + str(list(c)[1]), str(list(c)[0])] + ['Cover'] for c in cov]
     #     print(len(cc))
-    sql3 = 'select * from coverage where testcaseid>'+str(x)+' and testcaseid<='+str(y)
-    cursor.execute(sql3)
-    cov = cursor.fetchall()
-    cc=[['t'+str(list(c)[1]),str(list(c)[0])]+['Cover'] for c in cov]
-    print(len(cc))
-    l1 = [':START_ID', ':END_ID',':TYPE']
-    with open('/home/dongxinxiang/cov.csv', 'a+', newline='') as file:
-        writer = csv.writer(file)
-        #writer.writerow(l1)
-        writer.writerows(cc)
+    # sql3 = 'select * from coverage where testcaseid>'+str(x)+' and testcaseid<='+str(y)
+    # cursor.execute(sql3)
+    # cov = cursor.fetchall()
+    # cc=[['t'+str(list(c)[1]),str(list(c)[0])]+['Cover'] for c in cov]
+    # print(len(cc))
+    # #l1 = [':START_ID', ':END_ID',':TYPE']
+    # with open('/home/dongxinxiang/cov.csv', 'a+', newline='') as file:
+    #     writer = csv.writer(file)
+    #     #writer.writerow(l1)
+    #     writer.writerows(cc)
+make_csv(0,0)
+# make_csv(0,19279)
+# make_csv(19279,29279)
+# make_csv(29279,39279)
 # make_csv(39279,49279)
 # make_csv(49279,59279)
 # make_csv(59279,69279)

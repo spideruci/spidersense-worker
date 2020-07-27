@@ -25,11 +25,19 @@ class BaseModel(GraphObject):
 
 class Testcase(BaseModel):
     testcaseid=Property()
+    projectId=Property()
+    buildId=Property()
+    signature=Property()
+    sourcename=Property()
     coverage=RelatedTo('Line','Cover')
     def as_dict(self):
         return {
             'testcaseid': self.testcaseid,
-            'coverage':self.coverage
+            'coverage':self.coverage,
+            'projectId':self.projectId,
+            'buildId':self.buildId,
+            'signature':self.signature,
+            'sourcename':self.sourcename
         }
 
     def fetch(self,id):
@@ -42,6 +50,10 @@ class Testcase(BaseModel):
 
 class Line(BaseModel):
     lineid=Property()
+    projectId = Property()
+    buildId = Property()
+    linenumber = Property()
+    sourcename = Property()
     covered=RelatedFrom('Testcase','Cover')
     def fetch(self,id):
         return self.match(graph).where(lineid=id)
@@ -49,7 +61,11 @@ class Line(BaseModel):
     def as_dict(self):
         return {
             'lineid': self.lineid,
-            'covered': self.covered
+            'covered': self.covered,
+            'projectId': self.projectId,
+            'buildId': self.buildId,
+            'linenumber': self.linenumber,
+            'sourcename': self.sourcename
         }
     def fetch_covered(self):
         return [{

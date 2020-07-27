@@ -1,18 +1,23 @@
 import graphene
 import neo4jModels
-
+import time
 
 
 
 class LineSchema(graphene.ObjectType):
     lineid=graphene.String()
+    projectId = graphene.String()
+    buildId = graphene.String()
+    linenumber = graphene.String()
+    sourcename = graphene.String()
 
-    def resolve_coverage(self, info):
-        return neo4jModels.Line().match(neo4jModels.graph).where(
-            lineid=self.lineid).first().fetch_coverage()
 
 class TestcaseSchema(graphene.ObjectType):
     testcaseid=graphene.String()
+    projectId = graphene.String()
+    buildId = graphene.String()
+    signature = graphene.String()
+    sourcename = graphene.String()
     coverage=graphene.List(LineSchema)
 
     def resolve_coverage(self, info):
@@ -25,10 +30,13 @@ class Query(graphene.ObjectType):
 
 
     def resolve_Testcases(self, info,**kwargs):
+        #t1=time.time()
         result=neo4jModels.Testcase().all
 
         if(kwargs.get('testcaseid')):
             result=neo4jModels.Testcase.match(neo4jModels.graph).where(testcaseid='t'+kwargs.get('testcaseid'))#type=TestcaseMatch
+        #t2=time.time()
+        #print(t2-t1)
         return [TestcaseSchema(**testcase.as_dict()) for testcase in result]
 
     def resolve_Lines(self, info,**kwargs):

@@ -13,11 +13,16 @@ import neo4jSchema2
 from sqlalchemy.ext.declarative import declarative_base
 import subprocess
 from github_webhook import Webhook
-
+import time
+import random
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'  # change this to your own sql connection
-engine = create_engine(SQLALCHEMY_DATABASE_URI)
+engine = create_engine(SQLALCHEMY_DATABASE_URI,max_overflow=50,  # 超过连接池大小外最多创建的连接
+        pool_size=1000,  # 连接池大小
+        pool_timeout=30,  # 池中没有线程最多等待的时间，否则报错
+        pool_recycle=-1)
 Session = sessionmaker(bind=engine)
-session = Session()
+session = scoped_session(Session)
+#session = Session()
 cf = configparser.ConfigParser()
 cf.read('config.ini')
 
@@ -34,7 +39,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 
 webhook = Webhook(app)  # Defines '/postreceive' endpoint
 app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
-                                                           schema=schema.dataschema, graphiql=True,
+                                                           schema=neo4jSchema.schema, graphiql=True,
                                                            get_context=lambda: {'session': session}))
 
 
@@ -57,7 +62,7 @@ def projQuery(projectId):
     print(projectId)
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
-    print('{}'.format(d))
+    session.remove()
     return '{}'.format(d)
 
 
@@ -66,7 +71,7 @@ def TaranQuery():
     query = "{builds(buildId:25){ line {lineId lineNumber sourceName coverage { testcase { testcaseId sourceName signature }}}}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
-    print('{}'.format(d))
+    session.remove()
     return '{}'.format(d)
 
 
@@ -75,7 +80,7 @@ def TestcaseQuery(testcaseId):
     query = "{testcases(testcaseId:" + testcaseId + "){signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
-    print('{}'.format(d))
+    session.remove()
     return '{}'.format(d)
 
 
@@ -84,7 +89,7 @@ def LineQuery(lineId):
     query = "{lines(lineId:" + lineId + "){lineNumber sourceName coverage{testcase{testcaseId signature sourceName}}}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
-    print('{}'.format(d))
+    session.remove()
     return '{}'.format(d)
 
 
@@ -94,7 +99,7 @@ def sourceQuery(sourceFile):
     print(query)
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
-    print('{}'.format(d))
+    session.remove()
     return '{}'.format(d)
 
 @app.route('/var/test')
@@ -125,12 +130,37 @@ def groupBySource():
     d = json.dumps(result.data)
     return '{}'.format(d)
 
+
+@app.route('/neo4jtimetest/<tid>')
+def neotest(tid):
+    query='{Testcases(testcaseid:"'+str(tid)+'"){projectId signature sourcename coverage{ lineid linenumber sourcename}}}'
+    result = neo4jSchema.schema.execute(query)
+    d = json.dumps(result.data)
+    return '{}'.format(d)
+
+@app.route('/mysqltimetest/<tid>')
+def mysqltest(tid):
+    query = "{testcases(testcaseId:" + str(tid) + "){projectId signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
+    #query='{Testcases(testcaseid:'+str(tid)+'){projectId signature sourcename coverage{ line{lineid linenumber sourcename}}}}'
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    d = json.dumps(result.data)
+    return '{}'.format(d)
 # q2:testcases(sourceName:"[runner:org.spideruci.tarantula.TestCalculatePassOnStmtAndFailOnStmt]"){testcaseId signature}
 # if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
 #     os.system('rm -rf /home/dongxinxiang/demo/*')
 #     projList=cf.get('webhook-proj','proj-list').split(',')
 #     for proj in projList:
 #         operate_proj(proj)
+# i=0
+# for i in range(100):
+#     rd=random.randint(20000,90000)
+#     print(rd)
+#     t1=time.time()
+#     #mysqltest(rd)
+#     neotest(rd)
+#     t2=time.time()
+#     i+=t2-t1
+# print(i)
 
 # utils.database_operation(projectId=17,buildId=25,jsonpath='/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',session=session)
 @webhook.hook()  # Defines a handler for the 'push' event
