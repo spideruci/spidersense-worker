@@ -20,14 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="docker integrated">
-      <change afterPath="$PROJECT_DIR$/dockerneo4j.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neo4jModels.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neo4jSchema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neo4jSchema2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neo4jUtils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neo4jtest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/workerServer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +54,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.neo4jUtils">
+  <component name="RunManager" selected="Python.workerServer">
     <configuration name="buildProj" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="spidersense-worker" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -196,8 +189,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.neo4jUtils" />
         <item itemvalue="Python.workerServer" />
+        <item itemvalue="Python.neo4jUtils" />
         <item itemvalue="Python.utils" />
         <item itemvalue="Python.neo4jtest" />
         <item itemvalue="Python.buildProj" />
@@ -232,7 +225,7 @@
       <workItem from="1595529843008" duration="15576000" />
       <workItem from="1595557267766" duration="8937000" />
       <workItem from="1595631757939" duration="3498000" />
-      <workItem from="1595831171367" duration="3904000" />
+      <workItem from="1595831171367" duration="6951000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -304,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595201389072</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="docker integrated">
+      <created>1595864999003</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1595864999003</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,22 +339,22 @@
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="65" y="293" key="#SQL_Dialects/65.24.1853.864@65.24.1853.864" timestamp="1595550691658" />
-    <state width="1801" height="190" key="GridCell.Tab.0.bottom" timestamp="1595837416794">
+    <state width="1801" height="190" key="GridCell.Tab.0.bottom" timestamp="1595866974464">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1595837416794" />
-    <state width="1801" height="190" key="GridCell.Tab.0.center" timestamp="1595837416793">
+    <state width="1801" height="190" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1595866974464" />
+    <state width="1801" height="190" key="GridCell.Tab.0.center" timestamp="1595866974463">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1595837416793" />
-    <state width="1801" height="190" key="GridCell.Tab.0.left" timestamp="1595837416793">
+    <state width="1801" height="190" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1595866974463" />
+    <state width="1801" height="190" key="GridCell.Tab.0.left" timestamp="1595866974463">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1595837416793" />
-    <state width="1801" height="190" key="GridCell.Tab.0.right" timestamp="1595837416794">
+    <state width="1801" height="190" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1595866974463" />
+    <state width="1801" height="190" key="GridCell.Tab.0.right" timestamp="1595866974464">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1595837416794" />
+    <state width="1801" height="190" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1595866974464" />
     <state x="515" y="78" key="SettingsEditor" timestamp="1595552197127">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
@@ -378,7 +378,7 @@
     <SUITE FILE_PATH="coverage/spidersense_worker$utils.coverage" NAME="utils Coverage Results" MODIFIED="1595798082943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$neo4jtest.coverage" NAME="neo4jtest Coverage Results" MODIFIED="1595613169180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="workerServer Coverage Results" MODIFIED="1594164393177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/spidersense_worker$workerServer.coverage" NAME="workerServer Coverage Results" MODIFIED="1595807687301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$workerServer.coverage" NAME="workerServer Coverage Results" MODIFIED="1595869255166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$buildProj.coverage" NAME="buildProj Coverage Results" MODIFIED="1595026586885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

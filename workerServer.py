@@ -107,8 +107,25 @@ def varQuery():
     print('{}'.format(d))
     return '{}'.format(d)
 
+@app.route('/getAllTaranTestcases')
+def groupBySource():
+    sources=session.execute('select DISTINCT sourceName from testcase where projectId=17').fetchall()
+    #print(sources)
+    query='{'
+    index=0
+    for src in sources:
+        srcname=src[0]
+        qname=src[0].split('.')[-1][:-1]
+        subq=qname+':testcases(sourceName:"'+srcname+'"){testcaseId signature}'
+        query+=subq
+    query+='}'
+    print(query)
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    result.data['src']=[src[0].split('.')[-1][:-1] for src in sources]
+    d = json.dumps(result.data)
+    return '{}'.format(d)
 
-
+# q2:testcases(sourceName:"[runner:org.spideruci.tarantula.TestCalculatePassOnStmtAndFailOnStmt]"){testcaseId signature}
 # if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
 #     os.system('rm -rf /home/dongxinxiang/demo/*')
 #     projList=cf.get('webhook-proj','proj-list').split(',')
