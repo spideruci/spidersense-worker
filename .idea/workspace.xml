@@ -19,12 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="docker integrated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neo4jModels.py" beforeDir="false" afterPath="$PROJECT_DIR$/neo4jModels.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neo4jSchema.py" beforeDir="false" afterPath="$PROJECT_DIR$/neo4jSchema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neo4jSchema2.py" beforeDir="false" afterPath="$PROJECT_DIR$/neo4jSchema2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neo4jUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/neo4jUtils.py" afterDir="false" />
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="sqlalchemy pool added">
       <change beforePath="$PROJECT_DIR$/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/workerServer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -229,7 +224,7 @@
       <workItem from="1595529843008" duration="15576000" />
       <workItem from="1595557267766" duration="8937000" />
       <workItem from="1595631757939" duration="3498000" />
-      <workItem from="1595831171367" duration="15815000" />
+      <workItem from="1595831171367" duration="16250000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -315,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595869310016</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="sqlalchemy pool added">
+      <created>1595889000789</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1595889000789</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,7 +341,8 @@
     <MESSAGE value="added webhook" />
     <MESSAGE value="branch for frontend" />
     <MESSAGE value="docker integrated" />
-    <option name="LAST_COMMIT_MESSAGE" value="docker integrated" />
+    <MESSAGE value="sqlalchemy pool added" />
+    <option name="LAST_COMMIT_MESSAGE" value="sqlalchemy pool added" />
   </component>
   <component name="WindowStateProjectService">
     <state x="833" y="297" key="#Notifications" timestamp="1594938065900">
@@ -350,30 +353,30 @@
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="65" y="293" key="#SQL_Dialects/65.24.1853.864@65.24.1853.864" timestamp="1595550691658" />
-    <state width="1801" height="190" key="GridCell.Tab.0.bottom" timestamp="1595888934484">
+    <state width="1801" height="190" key="GridCell.Tab.0.bottom" timestamp="1595889166463">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1595888934484" />
-    <state width="1801" height="190" key="GridCell.Tab.0.center" timestamp="1595888934483">
+    <state width="1801" height="190" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1595889166463" />
+    <state width="1801" height="190" key="GridCell.Tab.0.center" timestamp="1595889166462">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1595888934483" />
-    <state width="1801" height="190" key="GridCell.Tab.0.left" timestamp="1595888934482">
+    <state width="1801" height="190" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1595889166462" />
+    <state width="1801" height="190" key="GridCell.Tab.0.left" timestamp="1595889166462">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1595888934482" />
-    <state width="1801" height="190" key="GridCell.Tab.0.right" timestamp="1595888934483">
+    <state width="1801" height="190" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1595889166462" />
+    <state width="1801" height="190" key="GridCell.Tab.0.right" timestamp="1595889166463">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="1801" height="190" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1595888934483" />
+    <state width="1801" height="190" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1595889166463" />
     <state x="515" y="78" key="SettingsEditor" timestamp="1595552197127">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1595552197127" />
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1595869347024">
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1595889016075">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1595869347024" />
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1595889016075" />
     <state x="164" y="96" width="1655" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595876161753">
       <screen x="65" y="24" width="1853" height="864" />
     </state>

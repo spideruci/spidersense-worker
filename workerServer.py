@@ -15,6 +15,9 @@ import subprocess
 from github_webhook import Webhook
 import time
 import random
+from flask import Flask
+from flask_cors import CORS
+
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'  # change this to your own sql connection
 engine = create_engine(SQLALCHEMY_DATABASE_URI,max_overflow=50,  # 超过连接池大小外最多创建的连接
         pool_size=1000,  # 连接池大小
@@ -33,6 +36,7 @@ models.Base.metadata.create_all(engine)
 # navicat script
 # ./navicat15-mysql-en.AppImage
 app = Flask(__name__)
+cors = CORS(app)
 app.debug = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
