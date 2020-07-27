@@ -7,8 +7,9 @@ import schema
 import buildProj
 import models
 import configparser
-import utils
 import json
+import neo4jSchema
+import neo4jSchema2
 from sqlalchemy.ext.declarative import declarative_base
 import subprocess
 from github_webhook import Webhook
@@ -95,6 +96,17 @@ def sourceQuery(sourceFile):
     d = json.dumps(result.data)
     print('{}'.format(d))
     return '{}'.format(d)
+
+@app.route('/var/test')
+def varQuery():
+    query = 'query q($srcname:String,$testId:Int){testcases(sourceName:$srcname,testcaseId:$testId){testcaseId projectId signature coverage{ line{ lineId lineNumber sourceName}}}}'
+    print(query)
+    result = schema.dataschema.execute(query, context_value={'session': session},variables={'srcname':'[runner:org.spideruci.tarantula.TestCalculatePassOnStmtAndFailOnStmt]',
+                                                                                            'testId':10346})
+    d = json.dumps(result.data)
+    print('{}'.format(d))
+    return '{}'.format(d)
+
 
 
 # if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version

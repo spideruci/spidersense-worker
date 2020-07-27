@@ -5,7 +5,7 @@ import os
 import models
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+import workerServer
 
 #f = open(jsonpath, 'r', encoding = 'utf-8')
 def database_operation(projectId,buildId,jsonpath,session):
@@ -120,3 +120,8 @@ def database_operation(projectId,buildId,jsonpath,session):
             print(fullname+' success!')
     else:
         print('no such file')
+for i in range(100):
+    print(i)
+    workerServer.session.add(models.Build(buildId=33+i,projectId=7,commitId=str(i)))
+    workerServer.session.commit()
+    database_operation(7, 33+i, '/home/dongxinxiang/demo/tacoco_output/jsoup-cov-matrix.json', workerServer.session)
