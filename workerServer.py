@@ -31,10 +31,6 @@ cf.read('config.ini')
 
 models.Base.metadata.create_all(engine)
 
-# utils.database_operation(buildId=17,projectId=10,session=session,jsonpath='/home/dongxinxiang/tarantula-cov-matrix.json')
-
-# navicat script
-# ./navicat15-mysql-en.AppImage
 app = Flask(__name__)
 cors = CORS(app)
 app.debug = True
@@ -58,7 +54,7 @@ def operate_proj(git, commit):
                   ' ' + str(projId) + ' ' + str(buildId),shell=True)
 
 
-# utils.database_operation(projectId=13,buildId=21,jsonpath='/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',session=session)
+
 
 @app.route('/test/project/<projectId>')
 def projQuery(projectId):
@@ -118,7 +114,7 @@ def varQuery():
 
 @app.route('/getAllTaranTestcases')
 def groupBySource():
-    sources=session.execute('select DISTINCT sourceName from testcase where projectId=17').fetchall()
+    sources=session.execute('select DISTINCT sourceName from testcase where buildId=33').fetchall()
     #print(sources)
     query='{'
     index=0
@@ -145,28 +141,18 @@ def neotest(tid):
 @app.route('/mysqltimetest/<tid>')
 def mysqltest(tid):
     query = "{testcases(testcaseId:" + str(tid) + "){projectId signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
-    #query='{Testcases(testcaseid:'+str(tid)+'){projectId signature sourcename coverage{ line{lineid linenumber sourcename}}}}'
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
     return '{}'.format(d)
-# q2:testcases(sourceName:"[runner:org.spideruci.tarantula.TestCalculatePassOnStmtAndFailOnStmt]"){testcaseId signature}
+
 # if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
 #     os.system('rm -rf /home/dongxinxiang/demo/*')
 #     projList=cf.get('webhook-proj','proj-list').split(',')
 #     for proj in projList:
 #         operate_proj(proj)
-# i=0
-# for i in range(100):
-#     rd=random.randint(20000,90000)
-#     print(rd)
-#     t1=time.time()
-#     #mysqltest(rd)
-#     neotest(rd)
-#     t2=time.time()
-#     i+=t2-t1
-# print(i)
 
-# utils.database_operation(projectId=17,buildId=25,jsonpath='/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',session=session)
+
+
 @webhook.hook()  # Defines a handler for the 'push' event
 def on_push(data):
     # print(data['after'])
@@ -176,3 +162,9 @@ def on_push(data):
 
 if __name__ == '__main__':
     app.run()
+
+# from threading import Thread
+# for i in range(20):
+#     print(i)
+#     t = Thread(target=mysqltest,kwargs={"tid":13233+i})
+#     t.start()
