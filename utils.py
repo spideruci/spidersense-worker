@@ -5,8 +5,8 @@ import os
 import models
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import workerServer
-
+import requests
+import time
 
 def database_operation(projectId,buildId,jsonpath,session):
     if os.path.exists(jsonpath):
@@ -130,8 +130,37 @@ def makeLineDict(session,projectId,buildId):
         lineIdandTestcases[lines.lineId] = []
         lineIdList.append(lines.lineId)
     return lineIdDict
+
+def githubTimeConvert(gittime):
+    gdate = gittime[0:10]
+    gtime = gittime[11:19]
+    return time.mktime(time.strptime(gdate+' '+gtime, "%Y-%m-%d %H:%M:%S"))
+
+def githubTimeCompare(gittime1,gittime2):
+    return githubTimeConvert(gittime2)>githubTimeConvert(gittime1)
+#https://github.com/sunflower0309/jsoup.git
+#https://api.github.com/repos/sunflower0309/jsoup/commits?per_page=2&sha=dc38b0aed68f0ece00a32dd927e56c4e50132ed9
+def getcommits(author,name,time):
+    commits=set()
+    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches').json()
+    #print(branches)
+    for branch in branches:
+        #print(branch)
+        sha=branch['commit']['sha']
+        #print(branch['name'])
+        commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha).json()
+        for cm in commitbr:
+            if(githubTimeConvert(cm['commit']['committer']['date'])>time):
+                commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date'])))
+            else:
+                break
+    return commits
+#getcommits(1,'2019-07-05T03:38:30Z')
+print(githubTimeConvert('2020-05-02T08:01:44Z'))
 # for i in range(100):
 #     print(i)
 #     workerServer.session.add(models.Build(buildId=33+i,projectId=7,commitId=str(i)))
 #     workerServer.session.commit()
 #     database_operation(7, 33+i, '/home/dongxinxiang/demo/tacoco_output/jsoup-cov-matrix.json', workerServer.session)
+
+

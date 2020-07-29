@@ -14,7 +14,7 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-def build(git,commit):
+def build(git,commit,time):
     name = git.split('/')[-1].split('.')[0]
 
     exist = True
@@ -26,7 +26,7 @@ def build(git,commit):
     projId = session.query(models.Project).filter(models.Project.projectLink == git).one().projectId
     buildQuery=session.query(models.Build).filter(models.Build.commitId==commit,models.Build.projectId==projId)
     if session.query(buildQuery.exists()).scalar() == False:
-        newBuild=models.Build(commitId=commit,projectId=projId)
+        newBuild=models.Build(commitId=commit,projectId=projId,timestamp=time)
         session.add(newBuild)
         session.commit()
         exist=False

@@ -10,14 +10,14 @@ import configparser
 import json
 import neo4jSchema
 import neo4jSchema2
-from sqlalchemy.ext.declarative import declarative_base
+import utils
 import subprocess
 from github_webhook import Webhook
 import time
 import random
 from flask import Flask
 from flask_cors import CORS
-
+from apscheduler.schedulers.background import BackgroundScheduler
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'  # change this to your own sql connection
 engine = create_engine(SQLALCHEMY_DATABASE_URI,max_overflow=50,  # 超过连接池大小外最多创建的连接
         pool_size=1000,  # 连接池大小
@@ -30,6 +30,8 @@ cf = configparser.ConfigParser()
 cf.read('config.ini')
 
 models.Base.metadata.create_all(engine)
+
+
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -44,14 +46,16 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
 
 
 
-def operate_proj(git, commit):
-    exist, buildId, projId, name = buildProj.build(git,commit)
+def operate_proj(git, commit,time):
+    exist, buildId, projId, name = buildProj.build(git,commit,time)
     print('get ' + name)
     if exist == True:
         pass
     else:
         subprocess.Popen('docker run --rm spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
                   ' ' + str(projId) + ' ' + str(buildId),shell=True)
+
+
 
 
 
@@ -145,11 +149,9 @@ def mysqltest(tid):
     d = json.dumps(result.data)
     return '{}'.format(d)
 
-# if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
-#     os.system('rm -rf /home/dongxinxiang/demo/*')
-#     projList=cf.get('webhook-proj','proj-list').split(',')
-#     for proj in projList:
-#         operate_proj(proj)
+if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
+    projList=cf.get('webhook-proj','proj-list').split(',')
+
 
 
 
@@ -157,14 +159,26 @@ def mysqltest(tid):
 def on_push(data):
     # print(data['after'])
     # print(data['repository']['clone_url'])
-    operate_proj(data['repository']['clone_url'], data['after'])
+    operate_proj(data['repository']['clone_url'], data['after'],data['commits']['timestamp'])
+
+def autopolling():
+    lasttime=session.execute('select timestamp from build where projectId=9 order by timestamp desc').fetchone()[0]
+    commits=utils.getcommits('sunflower0309','gson',lasttime)
+    if len(commits)==0:
+        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
+    else:
+        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
+        print(commits)
+    for commit in commits:
+        #print(commit)
+        operate_proj('https://github.com/sunflower0309/gson.git',commit[0],commit[1])
+    return ''
 
 
 if __name__ == '__main__':
-    app.run()
+    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' no new commits')
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=autopolling, trigger="interval", seconds=1200)
+    scheduler.start()
+    app.run(use_reloader=False)
 
-# from threading import Thread
-# for i in range(20):
-#     print(i)
-#     t = Thread(target=mysqltest,kwargs={"tid":13233+i})
-#     t.start()

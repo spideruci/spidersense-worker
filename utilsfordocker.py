@@ -168,4 +168,3 @@ bid=sys.argv[2]
 path=sys.argv[3]
 print(pid,bid,path)
 database_operation(pid,bid,path)
-#9d31dea064972162fab051045dd53f456203fb01

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey,Float
 from sqlalchemy.orm import relationship, foreign
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,6 +16,7 @@ class Build(Base):
     buildId = Column(Integer(), primary_key=True)
     projectId = Column(Integer(),ForeignKey('project.projectId'))
     commitId = Column(String(256))
+    timestamp=Column(Float())
     project = relationship(
         'Project',
         primaryjoin=(projectId == foreign(Project.projectId)),
