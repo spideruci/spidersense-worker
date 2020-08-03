@@ -3,11 +3,12 @@ from src import models
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import exists
+from src import workerServer
 cf = configparser.ConfigParser()
 cf.read('config.ini')
 tacocopath = cf.get('filepath', 'tacoco-path')
 print(tacocopath)
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'
+SQLALCHEMY_DATABASE_URI = workerServer.SQLALCHEMY_DATABASE_URI
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
