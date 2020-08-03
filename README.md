@@ -1,6 +1,6 @@
 This version used Python 3.5  
 
-Before you run the program, replace the SQLALCHEMY_DATABASE_URI in workerServer.py to your own database connection and import spiderworker.sql to your database    
+Before you run the program, replace the SQLALCHEMY_DATABASE_URI in src/workerServer.py to your own database connection and import spiderworker.sql to your database    
 
 Because the .sql file is too large, you need to increase the size limit, use terminal to enter Mysql console, enter:
 >show VARIABLES like '%max_allowed_packet%';  
@@ -8,9 +8,11 @@ Because the .sql file is too large, you need to increase the size limit, use ter
 
 Then the size limit will be set up to 500MB 
 
-The database include 2 projects and 4 builds, can be used to test different builds
 
-Use Pycharm, run workerServer.py  
+After setting up the database, run 
+>pip3 install -r requirement.txt
+>python3 run.py
+
 
 If run successful, go to 127.0.0.1:5000/graphql and test the graphQL query  
 
