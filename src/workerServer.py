@@ -1,7 +1,4 @@
 from flask_graphql import GraphQLView
-import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
 from src import models, utils, buildProj, schema,sqlsession
 import configparser
 import json
@@ -11,10 +8,10 @@ from github_webhook import Webhook
 import time
 from flask import Flask
 from flask_cors import CORS
-from apscheduler.schedulers.background import BackgroundScheduler
+
 
 session = sqlsession.session
-#session = Session()
+
 cf = configparser.ConfigParser()
 cf.read('config.ini')
 
@@ -138,8 +135,7 @@ def mysqltest(tid):
     d = json.dumps(result.data)
     return '{}'.format(d)
 
-if os.environ.get('WERKZEUG_RUN_MAIN') != 'true': #when restart the server, get the latest version
-    projList=cf.get('webhook-proj','proj-list').split(',')
+
 
 
 
@@ -160,7 +156,8 @@ def autopolling():
     keys=allCommits.keys()
     for key in keys:
         for cm in allCommits[key]:
-            operate_proj(key,cm[0],cm[1])
+            #operate_proj(key,cm[0],cm[1])
+            print(cm)
     return ''
 
 

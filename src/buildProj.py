@@ -1,9 +1,9 @@
 import configparser
 from src import models
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import exists
 from src import sqlsession
+
+
 cf = configparser.ConfigParser()
 cf.read('config.ini')
 tacocopath = cf.get('filepath', 'tacoco-path')

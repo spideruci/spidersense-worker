@@ -5,6 +5,8 @@ import requests
 import time
 import configparser
 from src import sqlsession
+
+
 def database_operation(projectId,buildId,jsonpath,session):
     if os.path.exists(jsonpath):
         f = open(jsonpath, 'r', encoding='utf-8')

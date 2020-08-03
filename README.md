@@ -10,7 +10,7 @@ Then the size limit will be set up to 500MB
 
 
 After setting up the database, run 
->pip3 install -r requirement.txt   
+>pip3 install -r requirements.txt   
 >python3 run.py
 
 
