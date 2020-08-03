@@ -1,7 +1,5 @@
 import graphene
-import neo4jModels
-import time
-
+from neo4j import neo4jModels
 
 
 class LineSchema(graphene.ObjectType):
@@ -31,10 +29,10 @@ class Query(graphene.ObjectType):
 
     def resolve_Testcases(self, info,**kwargs):
         #t1=time.time()
-        result=neo4jModels.Testcase().all
+        result= neo4jModels.Testcase().all
 
         if(kwargs.get('testcaseid')):
-            result=neo4jModels.Testcase.match(neo4jModels.graph).where(testcaseid='t'+kwargs.get('testcaseid'))#type=TestcaseMatch
+            result= neo4jModels.Testcase.match(neo4jModels.graph).where(testcaseid='t' + kwargs.get('testcaseid'))#type=TestcaseMatch
         #t2=time.time()
         #print(t2-t1)
         return [TestcaseSchema(**testcase.as_dict()) for testcase in result]

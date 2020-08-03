@@ -1,10 +1,6 @@
-import configparser
 import json
-import sys
 import os
-import models
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from src import models
 import requests
 import time
 
@@ -143,20 +139,18 @@ def githubTimeCompare(gittime1,gittime2):
 def getcommits(author,name,time):
     commits=set()
     branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches').json()
-    #print(branches)
     for branch in branches:
-        #print(branch)
         sha=branch['commit']['sha']
-        #print(branch['name'])
         commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha).json()
         for cm in commitbr:
             if(githubTimeConvert(cm['commit']['committer']['date'])>time):
                 commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date'])))
+                print(commits)
             else:
                 break
     return commits
 #getcommits(1,'2019-07-05T03:38:30Z')
-print(githubTimeConvert('2020-05-02T08:01:44Z'))
+#print(githubTimeConvert('2020-05-02T08:01:44Z'))
 # for i in range(100):
 #     print(i)
 #     workerServer.session.add(models.Build(buildId=33+i,projectId=7,commitId=str(i)))

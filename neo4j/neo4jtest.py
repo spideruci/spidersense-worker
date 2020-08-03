@@ -1,8 +1,7 @@
-import neo4jSchema
-import neo4jSchema2
 from py2neo import Graph,NodeMatcher
 from py2neo.ogm import GraphObject, Property, RelatedTo,RelatedFrom
-import neo4jModels
+
+
 class Testcase(GraphObject):
     __primarykey__ = 'id'
     testcaseid=Property()

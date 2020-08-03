@@ -1,20 +1,14 @@
-from flask import Flask, request
 from flask_graphql import GraphQLView
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-import schema
-import buildProj
-import models
+from src import models, utils, buildProj, schema
 import configparser
 import json
-import neo4jSchema
-import neo4jSchema2
-import utils
+from neo4j import neo4jSchema
 import subprocess
 from github_webhook import Webhook
 import time
-import random
 from flask import Flask
 from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -41,13 +35,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 
 webhook = Webhook(app)  # Defines '/postreceive' endpoint
 app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
-                                                           schema=neo4jSchema.schema, graphiql=True,
+                                                           schema=schema.dataschema, graphiql=True,
                                                            get_context=lambda: {'session': session}))
 
 
 
 def operate_proj(git, commit,time):
-    exist, buildId, projId, name = buildProj.build(git,commit,time)
+    exist, buildId, projId, name = buildProj.build(git, commit, time)
     print('get ' + name)
     if exist == True:
         pass
@@ -110,7 +104,7 @@ def sourceQuery(sourceFile):
 def varQuery():
     query = 'query q($srcname:String,$testId:Int){testcases(sourceName:$srcname,testcaseId:$testId){testcaseId projectId signature coverage{ line{ lineId lineNumber sourceName}}}}'
     print(query)
-    result = schema.dataschema.execute(query, context_value={'session': session},variables={'srcname':'[runner:org.spideruci.tarantula.TestCalculatePassOnStmtAndFailOnStmt]',
+    result = schema.dataschema.execute(query, context_value={'session': session}, variables={'srcname': '[runner:org.spideruci.tarantula.TestCalculatePassOnStmtAndFailOnStmt]',
                                                                                             'testId':10346})
     d = json.dumps(result.data)
     print('{}'.format(d))
@@ -163,7 +157,7 @@ def on_push(data):
 
 def autopolling():
     lasttime=session.execute('select timestamp from build where projectId=9 order by timestamp desc').fetchone()[0]
-    commits=utils.getcommits('sunflower0309','gson',lasttime)
+    commits= utils.getcommits('sunflower0309', 'gson', lasttime)
     if len(commits)==0:
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
     else:
@@ -175,10 +169,5 @@ def autopolling():
     return ''
 
 
-if __name__ == '__main__':
-    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' no new commits')
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(func=autopolling, trigger="interval", seconds=1200)
-    scheduler.start()
-    app.run(use_reloader=False)
+
 

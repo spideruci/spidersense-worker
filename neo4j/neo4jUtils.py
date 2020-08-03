@@ -1,7 +1,6 @@
 from py2neo import Graph,Node,Subgraph
 import json
-import models
-import pandas as pd
+from src import models
 
 graph = Graph("http://localhost:7474",auth=("neo4j","313461"))
 

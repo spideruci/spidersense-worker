@@ -1,7 +1,7 @@
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
+from graphene_sqlalchemy import SQLAlchemyObjectType
 import graphene
 
-import models
+from src import models
 
 
 class ProjectQuery(SQLAlchemyObjectType):
@@ -41,11 +41,11 @@ class Query(graphene.ObjectType):
     def resolve_projects(self, info, **kwargs):#operate given arguments
         query = ProjectQuery.get_query(info)  # SQLAlchemy query
         if (kwargs.get("projectId")):
-            query=query.filter(models.Project.projectId==kwargs.get("projectId"))
+            query=query.filter(models.Project.projectId == kwargs.get("projectId"))
         if (kwargs.get("projectName")):
-            query=query.filter(models.Project.projectName==kwargs.get("projectName"))
+            query=query.filter(models.Project.projectName == kwargs.get("projectName"))
         if (kwargs.get("projectLink")):
-            query=query.filter(models.Project.projectLink==kwargs.get("projectLink"))
+            query=query.filter(models.Project.projectLink == kwargs.get("projectLink"))
         return query.all()
 
 
@@ -53,17 +53,17 @@ class Query(graphene.ObjectType):
     def resolve_builds(self, info, **kwargs):
         query = BuildQuery.get_query(info)
         if(kwargs.get("projectId")):
-            query=query.filter(models.Build.projectId==kwargs.get('projectId'))
+            query=query.filter(models.Build.projectId == kwargs.get('projectId'))
         if (kwargs.get("buildId")):
             query = query.filter(models.Build.buildId == kwargs.get('buildId'))
         if (kwargs.get("commitId")):
-            query=query.filter(models.Build.commitId==kwargs.get("commitId"))
+            query=query.filter(models.Build.commitId == kwargs.get("commitId"))
         return query.all()
 
     def resolve_testcases(self,info,**kwargs):
         query = TestCaseQuery.get_query(info)
         if(kwargs.get('testcaseId')):
-            query=query.filter(models.TestCase.testcaseId==kwargs.get('testcaseId'))
+            query=query.filter(models.TestCase.testcaseId == kwargs.get('testcaseId'))
         if (kwargs.get('projectId')):
             query = query.filter(models.TestCase.projectId == kwargs.get('projectId'))
         if (kwargs.get('sourceName')):

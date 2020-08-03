@@ -1,5 +1,5 @@
 import graphene
-import neo4jModels
+from neo4j import neo4jModels
 
 
 class TestcaseSchema2(graphene.ObjectType):
@@ -32,10 +32,10 @@ class Query2(graphene.ObjectType):
 
 
     def resolve_Testcases(self, info,**kwargs):
-        result=neo4jModels.Testcase().all
+        result= neo4jModels.Testcase().all
 
         if(kwargs.get('testcaseid')):
-            result=neo4jModels.Testcase.match(neo4jModels.graph).where(testcaseid='t'+kwargs.get('testcaseid'))#type=TestcaseMatch
+            result= neo4jModels.Testcase.match(neo4jModels.graph).where(testcaseid='t' + kwargs.get('testcaseid'))#type=TestcaseMatch
         return [TestcaseSchema2(**testcase.as_dict()) for testcase in result]
 
     def resolve_Lines(self, info,**kwargs):
