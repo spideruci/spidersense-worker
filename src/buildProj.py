@@ -3,15 +3,13 @@ from src import models
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import exists
-from src import workerServer
+from src import sqlsession
 cf = configparser.ConfigParser()
 cf.read('config.ini')
 tacocopath = cf.get('filepath', 'tacoco-path')
 print(tacocopath)
-SQLALCHEMY_DATABASE_URI = workerServer.SQLALCHEMY_DATABASE_URI
-engine = create_engine(SQLALCHEMY_DATABASE_URI)
-Session = sessionmaker(bind=engine)
-session = Session()
+
+session = sqlsession.session
 
 def build(git,commit,time):
     name = git.split('/')[-1].split('.')[0]

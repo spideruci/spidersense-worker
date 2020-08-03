@@ -2,7 +2,7 @@ from flask_graphql import GraphQLView
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from src import models, utils, buildProj, schema
+from src import models, utils, buildProj, schema,sqlsession
 import configparser
 import json
 from neo4j import neo4jSchema
@@ -12,18 +12,13 @@ import time
 from flask import Flask
 from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@127.0.0.1:3306/spider-worker'  # change this to your own sql connection
-engine = create_engine(SQLALCHEMY_DATABASE_URI,max_overflow=50,  # 超过连接池大小外最多创建的连接
-        pool_size=1000,  # 连接池大小
-        pool_timeout=30,  # 池中没有线程最多等待的时间，否则报错
-        pool_recycle=-1)
-Session = sessionmaker(bind=engine)
-session = scoped_session(Session)
+
+session = sqlsession.session
 #session = Session()
 cf = configparser.ConfigParser()
 cf.read('config.ini')
 
-models.Base.metadata.create_all(engine)
+models.Base.metadata.create_all(sqlsession.engine)
 
 
 
@@ -31,7 +26,7 @@ app = Flask(__name__)
 cors = CORS(app)
 app.debug = True
 
-app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+
 
 webhook = Webhook(app)  # Defines '/postreceive' endpoint
 app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
@@ -156,16 +151,16 @@ def on_push(data):
     operate_proj(data['repository']['clone_url'], data['after'],data['commits']['timestamp'])
 
 def autopolling():
-    lasttime=session.execute('select timestamp from build where projectId=9 order by timestamp desc').fetchone()[0]
-    commits= utils.getcommits('sunflower0309', 'gson', lasttime)
-    if len(commits)==0:
+    allCommits=utils.getAllCommits()
+    if len(allCommits)==0:
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
     else:
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
-        print(commits)
-    for commit in commits:
-        #print(commit)
-        operate_proj('https://github.com/sunflower0309/gson.git',commit[0],commit[1])
+        #print(allCommits)
+    keys=allCommits.keys()
+    for key in keys:
+        for cm in allCommits[key]:
+            operate_proj(key,cm[0],cm[1])
     return ''
 
 
