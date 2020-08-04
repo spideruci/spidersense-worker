@@ -2,7 +2,6 @@ from flask_graphql import GraphQLView
 from src import models, utils, buildProj, schema,sqlsession
 import configparser
 import json
-from neo4j import neo4jSchema
 import subprocess
 from github_webhook import Webhook
 import time
