@@ -32,7 +32,7 @@ def database_operation(projectId,buildId,jsonpath,session):
         lineIdDict=makeLineDict(session,projectId,buildId)
 
         for src in sourceList:
-            fullname = src['source']['fullName'].replace('/','.')
+            fullname = src['source']['fullName']
             startLine = src['source']['firstLine']
             covlist = []
             activeTests = src['activatingTests']  # index in the list
@@ -90,7 +90,7 @@ def database_operation(projectId,buildId,jsonpath,session):
 
 def saveLines(sourceList,projectId,buildId, session):
     for src in sourceList:
-        fullname = src['source']['fullName'].replace('/', '.')
+        fullname = src['source']['fullName']
         startLine = src['source']['firstLine']
         coverableLines = src['coverableLines']
         lines = []
@@ -179,3 +179,7 @@ def getAllCommits():
     print(allCommits)
     return allCommits
 
+def getAutherandRepoFromGit(gitLink):
+    author=gitLink.split('/')[-2]
+    name=gitLink.split('/')[-1].split('.')[0]
+    return author,name

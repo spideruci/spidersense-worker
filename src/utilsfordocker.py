@@ -103,7 +103,7 @@ def database_operation(projectId,buildId,jsonpath):
         #
         sourceList = dict_data['sources']
         for src in sourceList:
-            fullname=src['source']['fullName'].replace('/','.')
+            fullname=src['source']['fullName']
             startLine=src['source']['firstLine']
             coverableLines=src['coverableLines']
             lines = []
@@ -143,7 +143,7 @@ def database_operation(projectId,buildId,jsonpath):
 
 
         for src in sourceList:
-            fullname = src['source']['fullName'].replace('/','.')
+            fullname = src['source']['fullName']
             startLine = src['source']['firstLine']
             covlist = []
             activeTests = src['activatingTests']  # index in the list

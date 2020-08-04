@@ -104,7 +104,7 @@ def varQuery():
 
 @app.route('/getAllTaranTestcases')
 def groupBySource():
-    sources=session.execute('select DISTINCT sourceName from testcase where buildId=33').fetchall()
+    sources=session.execute('select DISTINCT sourceName from testcase where buildId=25').fetchall()
     #print(sources)
     query='{'
     index=0
@@ -121,22 +121,36 @@ def groupBySource():
     return '{}'.format(d)
 
 
-@app.route('/neo4jtimetest/<tid>')
-def neotest(tid):
-    query='{Testcases(testcaseid:"'+str(tid)+'"){projectId signature sourcename coverage{ lineid linenumber sourcename}}}'
-    result = neo4jSchema.schema.execute(query)
-    d = json.dumps(result.data)
+# @app.route('/neo4jtimetest/<tid>')
+# def neotest(tid):
+#     query='{Testcases(testcaseid:"'+str(tid)+'"){projectId signature sourcename coverage{ lineid linenumber sourcename}}}'
+#     result = neo4jSchema.schema.execute(query)
+#     d = json.dumps(result.data)
+#     return '{}'.format(d)
+#
+# @app.route('/mysqltimetest/<tid>')
+# def mysqltest(tid):
+#     query = "{testcases(testcaseId:" + str(tid) + "){projectId signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
+#     result = schema.dataschema.execute(query, context_value={'session': session})
+#     d = json.dumps(result.data)
+#     return '{}'.format(d)
+
+@app.route('/getTaranSourceInfo')
+def getTaranSourceInfo():
+    dict={}
+    links=[]
+    src=session.execute('select distinct sourceName from line where buildId=25').fetchall()
+    projId=session.execute('select projectId from build where buildId=25').fetchone()[0]
+    repolink=session.execute('select projectLink from project where projectId='+str(projId)).fetchone()[0]
+    author,repo=utils.getAutherandRepoFromGit(repolink)
+    for sr in src:
+        path=sr[0].replace('.','/')[:-5]
+        srclink='https://api.github.com/repos/'+author+'/'+repo+\
+                '/contents/src/main/java/'+path+'.java'
+        links.append(srclink)
+    dict['sourceLinks']=links
+    d = json.dumps(dict)
     return '{}'.format(d)
-
-@app.route('/mysqltimetest/<tid>')
-def mysqltest(tid):
-    query = "{testcases(testcaseId:" + str(tid) + "){projectId signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
-    result = schema.dataschema.execute(query, context_value={'session': session})
-    d = json.dumps(result.data)
-    return '{}'.format(d)
-
-
-
 
 
 
@@ -152,12 +166,11 @@ def autopolling():
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
     else:
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
-        #print(allCommits)
     keys=allCommits.keys()
     for key in keys:
         for cm in allCommits[key]:
-            #operate_proj(key,cm[0],cm[1])
-            print(cm)
+            operate_proj(key,cm[0],cm[1])
+            # print(cm)
     return ''
 
 
