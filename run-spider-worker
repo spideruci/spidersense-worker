@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# project_name=$(echo $1 | rev | cut -d'/' -f 1 | rev)
+# echo $project_name
+
+# cd $2
+# echo "RUNNING TACOCO"
+# mvn exec:java -Plauncher -Dtacoco.sut=$1 -Dtacoco.home=$2 -Dtacoco.project=$project_name -Danalyzer.opts="configs/tacoco-analyzer.config"
+# echo "RUNNING TACOCO --- DONE"
+
+# echo "ANALYZING EXEC FILE"
+# mvn exec:java -Panalyzer -Dtacoco.sut=$1 -Dtacoco.exec=tacoco_output/$project_name.exec -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
+# echo "ANALYZING EXEC FILE --- DONE"
+
+# echo "READING COVERAGE MATRIX"
+# mvn exec:java -Preader -Dtacoco.json=tacoco_output/$project_name.json -Dtacoco.pp
+# echo "READING COVERAGE MATRIX --- DONE"
+
+# open "tacoco_output/$project_name-cov-matrix.json"
+
+repo=$1
+echo $repo
+commit_id=$2
+echo $commit_id
+# git config --global user.name "sunflower0309"
+# git config --global user.name "sunflower0309+1s"
+# git clone https://github.com/spideruci/primitive-hamcrest.git /home/primitive-hamcrest
+# git clone https://github.com/spideruci/tacoco.git /home/tacoco
+git clone $repo /home/sut
+
+# cd /home/primitive-hamcrest
+# mvn install -DskipITs
+# cd /home/tacoco
+# mvn install -DskipITs
+cd /home/sut
+git checkout $commit_id
+mvn compile test-compile
+
+/home/tacoco/scripts/run-tacoco /home/sut /home/tacoco
+cd /home
+
+python3 ./utilsfordocker.py $3 $4 /home/tacoco/tacoco_output/sut-cov-matrix.json
