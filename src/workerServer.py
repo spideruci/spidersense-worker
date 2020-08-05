@@ -63,6 +63,14 @@ def TaranQuery():
     session.remove()
     return '{}'.format(d)
 
+@app.route('/TaranMatrix')
+def TaranMatrix():
+    query="{lines(buildId:25){lineId sourceName coverage{testcaseId}}}"
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    d = json.dumps(result.data)
+    session.remove()
+    return '{}'.format(d)
+
 
 @app.route('/testcaseCoverage/<testcaseId>')
 def TestcaseQuery(testcaseId):
@@ -121,6 +129,7 @@ def groupBySource():
 
 
 
+
 @app.route('/getTaranSourceInfo')
 def getTaranSourceInfo():
     dict={}
@@ -142,7 +151,7 @@ def getTaranSourceInfo():
 
 @webhook.hook()  # Defines a handler for the 'push' event
 def on_push(data):
-    operate_proj(data['repository']['clone_url'], data['after'],data['commits']['timestamp'])
+    operate_proj(data['repository']['clone_url'], data['after'],utils.githubTimeConvert(data['commits'][0]['timestamp']))
 
 def autopolling():
     allCommits=utils.getAllCommits()
