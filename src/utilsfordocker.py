@@ -83,7 +83,7 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@172.17.0.1:3306/spider-wo
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
-#f = open(jsonpath, 'r', encoding = 'utf-8')
+
 def database_operation(projectId,buildId,jsonpath):
     if os.path.exists(jsonpath):
         f = open(jsonpath, 'r', encoding='utf-8')
@@ -166,5 +166,5 @@ def database_operation(projectId,buildId,jsonpath):
 pid=sys.argv[1]
 bid=sys.argv[2]
 path=sys.argv[3]
-print(pid,bid,path)
+
 database_operation(pid,bid,path)

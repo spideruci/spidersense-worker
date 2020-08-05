@@ -1,0 +1,6 @@
+FROM ubuntu:18.04
+MAINTAINER DongxinXiang
+
+RUN apt-get update 
+RUN apt-get install -y mysql-server maven python3-pip git 
+RUN pip3 install pymysql sqlalchemy

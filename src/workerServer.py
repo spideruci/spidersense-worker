@@ -120,19 +120,6 @@ def groupBySource():
     return '{}'.format(d)
 
 
-# @app.route('/neo4jtimetest/<tid>')
-# def neotest(tid):
-#     query='{Testcases(testcaseid:"'+str(tid)+'"){projectId signature sourcename coverage{ lineid linenumber sourcename}}}'
-#     result = neo4jSchema.schema.execute(query)
-#     d = json.dumps(result.data)
-#     return '{}'.format(d)
-#
-# @app.route('/mysqltimetest/<tid>')
-# def mysqltest(tid):
-#     query = "{testcases(testcaseId:" + str(tid) + "){projectId signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
-#     result = schema.dataschema.execute(query, context_value={'session': session})
-#     d = json.dumps(result.data)
-#     return '{}'.format(d)
 
 @app.route('/getTaranSourceInfo')
 def getTaranSourceInfo():
@@ -155,8 +142,6 @@ def getTaranSourceInfo():
 
 @webhook.hook()  # Defines a handler for the 'push' event
 def on_push(data):
-    # print(data['after'])
-    # print(data['repository']['clone_url'])
     operate_proj(data['repository']['clone_url'], data['after'],data['commits']['timestamp'])
 
 def autopolling():

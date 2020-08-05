@@ -51,39 +51,6 @@ def database_operation(projectId,buildId,jsonpath,session):
             covlist.clear()
             print(fullname+' success!')
 
-            # for src in sourceList:
-            #     fullname = src['source']['fullName']
-            #     print(fullname)
-            #     startLine = src['source']['firstLine']
-            #     covlist = []
-            #     activeTests = src['activatingTests']  # index in the list
-            #     testcaseindex = 0
-            #     for tests in activeTests:
-            #         matrix=src['testStmtMatrix'][testcaseindex]#single matrix
-            #         testcaseinfo=testList[tests]
-            #         # testcaseId=session.query(models.TestCase).filter(models.TestCase.sourceName==testcaseinfo.split('/')[1],
-            #         #                                                  models.TestCase.signature==testcaseinfo.split('/',2)[-1],
-            #         #                                                  models.TestCase.projectId==2).first().testcaseId
-            #         testcaseId=testIdDict[testcaseinfo.split('/')[1]+testcaseinfo.split('/',2)[-1]]
-            #         for l in range(len(matrix)):
-            #             if matrix[l]==True:
-            #                 # lineId=session.query(models.Line).filter(models.Line.sourceName==fullname,models.Line.lineNumber==l+startLine,
-            #                 #                                          models.Line.projectId==2).one().lineId
-            #                 lineId=lineIdDict[fullname+str(l+startLine)]
-            #                 testIdandLines[testcaseId].append(lineId)
-            #                 lineIdandTestcases[lineId].append(testcaseId)
-            # # mappingtest=[]
-            # # for id in testIdList:
-            # #     mappingtest.append({'testcaseId':id,'coveredLines':','.join(map(str,testIdandLines[id]))})
-            # mappingline=[]
-            # for id in lineIdList:
-            #     mappingline.append({'lineId':id,'testcaseIds':','.join(map(str,lineIdandTestcases[id]))})
-            #
-            # #session.bulk_update_mappings(models.TestCase,mappingtest)
-            # session.bulk_update_mappings(models.Line,mappingline)
-            # session.commit()
-            # print(testIdandLines)
-            # print(lineIdandTestcases)
     else:
         print('no such file')
 
@@ -137,8 +104,7 @@ def githubTimeConvert(gittime):
 
 def githubTimeCompare(gittime1,gittime2):
     return githubTimeConvert(gittime2)>githubTimeConvert(gittime1)
-#https://github.com/sunflower0309/jsoup.git
-#https://api.github.com/repos/sunflower0309/jsoup/commits?per_page=2&sha=dc38b0aed68f0ece00a32dd927e56c4e50132ed9
+
 
 def getprojs():
     config = configparser.ConfigParser()
