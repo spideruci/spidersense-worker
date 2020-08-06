@@ -155,10 +155,10 @@ def on_push(data):
 
 def autopolling():
     allCommits=utils.getAllCommits()
-    if len(allCommits)==0:
-        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
-    else:
-        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
+    # if len(allCommits)==0:
+    #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
+    # else:
+    #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
     keys=allCommits.keys()
     for key in keys:
         for cm in allCommits[key]:
