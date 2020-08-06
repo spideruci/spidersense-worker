@@ -65,7 +65,7 @@ def TaranQuery():
 
 @app.route('/TaranMatrix')
 def TaranMatrix():
-    query="{lines(buildId:25){lineId sourceName coverage{testcaseId}}}"
+    query="{lines(buildId:25){lineId sourceName lineNumber coverage{testcaseId}}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
     session.remove()
