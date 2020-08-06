@@ -19,7 +19,7 @@ def database_operation(projectId,buildId,jsonpath,session):
             newCase = models.TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
                                       signature=test.split('/', 2)[-1], passed=1)
             tList.append(newCase)
-        print('testcase over!')
+        #print('testcase over!')
         session.bulk_save_objects(tList)
         session.commit()
 
@@ -49,7 +49,7 @@ def database_operation(projectId,buildId,jsonpath,session):
             session.bulk_save_objects(covlist)  # bulk save
             session.commit()
             covlist.clear()
-            print(fullname+' success!')
+            #print(fullname+' success!')
 
     else:
         print('no such file')
@@ -69,7 +69,7 @@ def saveLines(sourceList,projectId,buildId, session):
         session.bulk_save_objects(lines)
         session.commit()
         lines.clear()
-        print(fullname+'lines over!')
+        #print(fullname+'lines over!')
 
 def makeTestDict(session,projectId,buildId):
     testIdDict = {}  # only one query, put it in the dict, less connect to database

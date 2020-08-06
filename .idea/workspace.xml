@@ -19,9 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="add cov matrix endpoint">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="logging">
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +233,7 @@
       <workItem from="1595831171367" duration="39813000" />
       <workItem from="1596016662105" duration="34549000" />
       <workItem from="1596671244909" duration="1514000" />
-      <workItem from="1596738134109" duration="3290000" />
+      <workItem from="1596738134109" duration="3636000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -432,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596672028579</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="logging">
+      <created>1596752588549</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1596752588550</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +468,8 @@
     <MESSAGE value="modify requirements" />
     <MESSAGE value="remote deploy test" />
     <MESSAGE value="add cov matrix endpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="add cov matrix endpoint" />
+    <MESSAGE value="logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="logging" />
   </component>
   <component name="WindowStateProjectService">
     <state x="833" y="297" key="#Notifications" timestamp="1594938065900">
@@ -493,10 +500,10 @@
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1596485978714" />
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1596672035688">
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1596752599959">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1596672035688" />
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1596752599959" />
     <state x="164" y="96" width="1655" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596659016369">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
