@@ -37,7 +37,7 @@ def operate_proj(git, commit,time):
     if exist == True:
         pass
     else:
-        subprocess.Popen('docker run --rm spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
+        subprocess.Popen('docker run --rm -d > /home/docker.log spider-container:1.1 /home/run-spider-worker ' + git + ' ' + commit +
                   ' ' + str(projId) + ' ' + str(buildId),shell=True)
 
 
@@ -159,6 +159,8 @@ def autopolling():
     #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
     # else:
     #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
+    print(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
+    print(allCommits)
     keys=allCommits.keys()
     for key in keys:
         for cm in allCommits[key]:
