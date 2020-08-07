@@ -108,7 +108,7 @@ def githubTimeCompare(gittime1,gittime2):
 
 def getprojs():
     config = configparser.ConfigParser()
-    config.read("/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini")
+    config.read("/home/DongxinXiang/spidersense-worker/config.ini")
     infolist = config.get("polling", "proj-list")
     proj_list = json.loads(infolist)
     keys = list(proj_list.keys())
@@ -122,12 +122,14 @@ def getcommits(author,name,time):
         sha=branch['commit']['sha']
         commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha).json()
         for cm in commitbr:
+           # print(githubTimeConvert(cm['commit']['committer']['date']))
             if(githubTimeConvert(cm['commit']['committer']['date'])>time):
                 commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date'])))
                 #print(commits)
             else:
                 break
     return commits
+
 
 
 def getAllCommits():
@@ -140,6 +142,7 @@ def getAllCommits():
                                                      + link +'"').fetchone()[0]
             lasttime=sqlsession.session.execute('select timestamp from build where projectId='
                                                      + str(projid) +' order by timestamp desc').fetchone()[0]
+            print('lasttime: ',lasttime,link)
             commit=getcommits(user,name,lasttime)
             allCommits[link]=commit
     print(allCommits)
