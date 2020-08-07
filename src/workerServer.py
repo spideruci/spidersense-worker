@@ -159,9 +159,9 @@ def autopolling():
     #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
     # else:
     #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
-    print(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
-    print(allCommits)
+    print(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))
     keys=allCommits.keys()
+    print(allCommits)
     for key in keys:
         for cm in allCommits[key]:
             operate_proj(key,cm[0],cm[1])
