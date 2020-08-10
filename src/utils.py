@@ -6,6 +6,7 @@ import time
 import configparser
 from src import sqlsession
 
+CONFIG_PATH='/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini'
 
 def database_operation(projectId,buildId,jsonpath,session):
     if os.path.exists(jsonpath):
@@ -108,7 +109,7 @@ def githubTimeCompare(gittime1,gittime2):
 
 def getprojs():
     config = configparser.ConfigParser()
-    config.read("/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini")
+    config.read(CONFIG_PATH)
     infolist = config.get("polling", "proj-list")
     proj_list = json.loads(infolist)
     keys = list(proj_list.keys())
@@ -120,15 +121,17 @@ def getcommits(author,name,time):
     branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches').json()
     for branch in branches:
         sha=branch['commit']['sha']
+        #print(sha)
         commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha).json()
         for cm in commitbr:
+            #print(githubTimeConvert(cm['commit']['committer']['date']))
             if(githubTimeConvert(cm['commit']['committer']['date'])>time):
                 commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date'])))
                 #print(commits)
             else:
                 break
     return commits
-
+#print(getcommits('sunflower0309','gson',1596026889))
 
 def getAllCommits():
     allCommits= {}
@@ -149,3 +152,5 @@ def getAutherandRepoFromGit(gitLink):
     author=gitLink.split('/')[-2]
     name=gitLink.split('/')[-1].split('.')[0]
     return author,name
+
+print(getprojs())

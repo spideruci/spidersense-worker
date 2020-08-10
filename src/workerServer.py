@@ -33,14 +33,16 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
 
 def operate_proj(git, commit,time):
     exist, buildId, projId, name = buildProj.build(git, commit, time)
+    #print(exist,buildId,projId,name)
     print('get ' + name)
     if exist == True:
         pass
     else:
-        subprocess.Popen('docker run --rm spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
+        #print('here')
+        subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
                   ' ' + str(projId) + ' ' + str(buildId),shell=True)
 
-
+#-d > /home/dongxinxiang/docker.log
 
 
 
@@ -80,6 +82,15 @@ def TestcaseQuery(testcaseId):
     session.remove()
     return '{}'.format(d)
 
+@app.route('/commitCoverage/<sha>')
+def CommitCoverageQuery(sha):
+    bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
+    query = "{builds(buildId:"+str(bId)+"){testcase{signature sourceName coverage{line{lineId lineNumber sourceName}}}}}"
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    d = json.dumps(result.data)
+    session.remove()
+    return '{}'.format(d)
+
 
 @app.route('/lineCoverage/<lineId>')
 def LineQuery(lineId):
@@ -107,6 +118,7 @@ def varQuery():
                                                                                             'testId':10346})
     d = json.dumps(result.data)
     print('{}'.format(d))
+    session.remove()
     return '{}'.format(d)
 
 @app.route('/getAllTaranTestcases')
@@ -125,8 +137,38 @@ def groupBySource():
     result = schema.dataschema.execute(query, context_value={'session': session})
     result.data['src']=[src[0].split('.')[-1][:-1] for src in sources]
     d = json.dumps(result.data)
+    session.remove()
     return '{}'.format(d)
 
+@app.route('/getCommits/<projectId>')
+def getCommits(projectId):
+    query="{builds(projectId:"+str(projectId)+"){commitId committer timestamp message}}"
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    d = json.dumps(result.data)
+    dict=json.loads('{}'.format(d))
+    for data in dict['builds']:
+        data['timestamp']=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(data['timestamp']))
+    session.remove()
+    return json.dumps(dict)
+
+@app.route('/getSourceInfo/<sha>')
+def getSourceInfo(sha):
+    dict={}
+    links=[]
+    bpId=session.execute('select buildId,projectId from build where commitId=\''+sha+'\'').fetchall()
+    src=session.execute('select distinct sourceName from line where buildId='+str(bpId[0][0])).fetchall()
+    # projId=session.execute('select projectId from build where buildId=25').fetchone()[0]
+    repolink=session.execute('select projectLink from project where projectId='+str(bpId[0][1])).fetchone()[0]
+    author,repo=utils.getAutherandRepoFromGit(repolink)
+    for sr in src:
+        path=sr[0].replace('.','/')[:-5]
+        srclink='https://api.github.com/repos/'+author+'/'+repo+\
+                '/contents/src/main/java/'+path+'.java'
+        links.append(srclink)
+    dict['sourceLinks']=links
+    d = json.dumps(dict)
+    session.remove()
+    return '{}'.format(d)
 
 
 
@@ -145,6 +187,7 @@ def getTaranSourceInfo():
         links.append(srclink)
     dict['sourceLinks']=links
     d = json.dumps(dict)
+    session.remove()
     return '{}'.format(d)
 
 
@@ -159,7 +202,9 @@ def autopolling():
     #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
     # else:
     #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
+    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     keys=allCommits.keys()
+    #print(allCommits)
     for key in keys:
         for cm in allCommits[key]:
             operate_proj(key,cm[0],cm[1])

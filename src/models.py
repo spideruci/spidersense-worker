@@ -18,6 +18,8 @@ class Build(Base):
     buildId = Column(Integer(), primary_key=True)
     projectId = Column(Integer(),ForeignKey('project.projectId'))
     commitId = Column(String(256))
+    committer=Column(String())
+    message=Column(String())
     timestamp=Column(Float())
     project = relationship(
         'Project',

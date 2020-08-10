@@ -4,10 +4,10 @@ from sqlalchemy import exists
 from src import sqlsession
 
 
-cf = configparser.ConfigParser()
-cf.read('config.ini')
-tacocopath = cf.get('filepath', 'tacoco-path')
-print(tacocopath)
+# cf = configparser.ConfigParser()
+# cf.read('/home/DongxinXiang/PycharmProjects/spidersense-worker/config.ini')
+# tacocopath = cf.get('filepath', 'tacoco-path')
+#print(tacocopath)
 
 session = sqlsession.session
 
