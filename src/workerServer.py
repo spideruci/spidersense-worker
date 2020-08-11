@@ -101,6 +101,14 @@ def LineQuery(lineId):
     return '{}'.format(d)
 
 
+@app.route('/getAllProjects')
+def getAllProjects():
+    query="{projects{projectId projectName projectLink}}"
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    d = json.dumps(result.data)
+    session.remove()
+    return '{}'.format(d)
+
 @app.route('/sourceCoverage/<sourceFile>')
 def sourceQuery(sourceFile):
     query = '{lines(sourceName:"' + sourceFile + '"){lineId lineNumber coverage{testcase{testcaseId signature sourceName}}}}'

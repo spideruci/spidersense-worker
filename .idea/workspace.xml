@@ -19,14 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="logging">
-      <change afterPath="$PROJECT_DIR$/flask.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildProj.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildProj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="add new endpoints">
       <change beforePath="$PROJECT_DIR$/src/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/workerServer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -240,7 +233,7 @@
       <workItem from="1595831171367" duration="39813000" />
       <workItem from="1596016662105" duration="34549000" />
       <workItem from="1596671244909" duration="1514000" />
-      <workItem from="1596738134109" duration="21235000" />
+      <workItem from="1596738134109" duration="22071000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -459,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596753047595</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="add new endpoints">
+      <created>1597081402193</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1597081402193</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,7 +490,8 @@
     <MESSAGE value="remote deploy test" />
     <MESSAGE value="add cov matrix endpoint" />
     <MESSAGE value="logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="logging" />
+    <MESSAGE value="add new endpoints" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new endpoints" />
   </component>
   <component name="WindowStateProjectService">
     <state x="833" y="297" key="#Notifications" timestamp="1594938065900">
@@ -521,10 +522,10 @@
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1596485978714" />
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1596753055120">
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1597081435448">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1596753055120" />
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1597081435448" />
     <state x="164" y="96" width="1655" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596659016369">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
@@ -541,7 +542,7 @@
     <SUITE FILE_PATH="coverage/spidersense_worker$neo4jtest.coverage" NAME="neo4jtest Coverage Results" MODIFIED="1595613169180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$initial.coverage" NAME="initial Coverage Results" MODIFIED="1596823563354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="workerServer Coverage Results" MODIFIED="1594164393177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/spidersense_worker$run.coverage" NAME="run Coverage Results" MODIFIED="1597080934543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$run.coverage" NAME="run Coverage Results" MODIFIED="1597166422440" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$workerServer.coverage" NAME="workerServer Coverage Results" MODIFIED="1596473484029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$buildProj.coverage" NAME="buildProj Coverage Results" MODIFIED="1595026586885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
