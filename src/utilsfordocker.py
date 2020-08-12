@@ -6,7 +6,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey,Float
 from sqlalchemy.orm import relationship, foreign
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -24,12 +24,16 @@ class Build(Base):
     buildId = Column(Integer(), primary_key=True)
     projectId = Column(Integer(),ForeignKey('project.projectId'))
     commitId = Column(String(256))
+    committer=Column(String())
+    message=Column(String())
+    timestamp=Column(Float())
     project = relationship(
         'Project',
         primaryjoin=(projectId == foreign(Project.projectId)),
         uselist=False,
     )
     testcase = relationship('TestCase', uselist=True)
+    line = relationship('Line', uselist=True)
 
 class TestCase(Base):
     __tablename__ = 'testcase'
@@ -97,7 +101,6 @@ def database_operation(projectId,buildId,jsonpath):
             newCase = TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
                                       signature=test.split('/', 2)[-1], passed=1)
             tList.append(newCase)
-            print('testcase over!')
         session.bulk_save_objects(tList)
         session.commit()
         #
@@ -114,7 +117,6 @@ def database_operation(projectId,buildId,jsonpath):
             session.bulk_save_objects(lines)
             session.commit()
             lines.clear()
-            print('lines over!')
 
 
         testIdDict = {}  # only one query, put it in the dict, less connect to database
@@ -160,7 +162,8 @@ def database_operation(projectId,buildId,jsonpath):
             session.bulk_save_objects(covlist)  # bulk save
             session.commit()
             covlist.clear()
-            print(fullname+' success!')
+
+        print('build '+str(buildId)+' analyze over!')
     else:
         print('no such file')
 pid=sys.argv[1]

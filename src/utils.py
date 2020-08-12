@@ -126,7 +126,8 @@ def getcommits(author,name,time):
         for cm in commitbr:
             #print(githubTimeConvert(cm['commit']['committer']['date']))
             if(githubTimeConvert(cm['commit']['committer']['date'])>time):
-                commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date'])))
+                commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date']),cm['commit']['committer']['name'],
+                             cm['commit']['message']))
                 #print(commits)
             else:
                 break
@@ -153,4 +154,4 @@ def getAutherandRepoFromGit(gitLink):
     name=gitLink.split('/')[-1].split('.')[0]
     return author,name
 
-print(getprojs())
+#print(getprojs())

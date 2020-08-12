@@ -7,8 +7,11 @@ from github_webhook import Webhook
 import time
 from flask import Flask
 from flask_cors import CORS
+import os
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
-
+threadPool = ThreadPoolExecutor(max_workers=4)
 session = sqlsession.session
 
 cf = configparser.ConfigParser()
@@ -31,16 +34,17 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
 
 
 
-def operate_proj(git, commit,time):
-    exist, buildId, projId, name = buildProj.build(git, commit, time)
+def operate_proj(git, commit,time,committer,message):
+    exist, buildId, projId, name = buildProj.build(git, commit, time,committer,message)
     #print(exist,buildId,projId,name)
-    print('get ' + name)
     if exist == True:
         pass
     else:
-        #print('here')
-        subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
-                  ' ' + str(projId) + ' ' + str(buildId),shell=True)
+        print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
+        os.system('docker run --rm -d spider-container:1.3 /home/run-spider-worker ' + git + ' ' + commit +
+                  ' ' + str(projId) + ' ' + str(buildId))
+        # subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
+        #           ' ' + str(projId) + ' ' + str(buildId),shell=True,start_new_session=True)
 
 #-d > /home/dongxinxiang/docker.log
 
@@ -129,24 +133,41 @@ def varQuery():
     session.remove()
     return '{}'.format(d)
 
-@app.route('/getAllTaranTestcases')
-def groupBySource():
-    sources=session.execute('select DISTINCT sourceName from testcase where buildId=25').fetchall()
-    #print(sources)
-    query='{'
-    index=0
-    for src in sources:
-        srcname=src[0]
-        qname=src[0].split('.')[-1][:-1]
-        subq=qname+':testcases(sourceName:"'+srcname+'"){testcaseId signature}'
-        query+=subq
-    query+='}'
-    print(query)
+# @app.route('/getTaranTestcases')
+# def groupBySource(sha):
+#     bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
+#     sources=session.execute('select DISTINCT sourceName from testcase where buildId=25').fetchall()
+#     #print(sources)
+#     query='{'
+#     index=0
+#     for src in sources:
+#         srcname=src[0]
+#         qname=src[0].split('.')[-1][:-1]
+#         subq=qname+':testcases(sourceName:"'+srcname+'"){testcaseId signature}'
+#         query+=subq
+#     query+='}'
+#     print(query)
+#     result = schema.dataschema.execute(query, context_value={'session': session})
+#     result.data['src']=[src[0].split('.')[-1][:-1] for src in sources]
+#     d = json.dumps(result.data)
+#     session.remove()
+#     return '{}'.format(d)
+
+@app.route('/getAllTestcases/<sha>')
+def groupBySourceName(sha):
+    bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
+    query="{testcases(buildId:" + str(bId) + "){signature sourceName testcaseId}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
-    result.data['src']=[src[0].split('.')[-1][:-1] for src in sources]
+    finalresult={}
     d = json.dumps(result.data)
-    session.remove()
-    return '{}'.format(d)
+    dict = json.loads('{}'.format(d))
+    for cases in dict['testcases']:
+        if cases['sourceName'] in result.data.keys():
+            finalresult[cases['sourceName']].append(cases)
+        else:
+            finalresult[cases['sourceName']]=[cases]
+    dd=json.dumps(finalresult)
+    return '{}'.format(dd)
 
 @app.route('/getCommits/<projectId>')
 def getCommits(projectId):
@@ -215,7 +236,10 @@ def autopolling():
     #print(allCommits)
     for key in keys:
         for cm in allCommits[key]:
-            operate_proj(key,cm[0],cm[1])
+            threadPool.submit(operate_proj,key,cm[0],cm[1],cm[2],cm[3])
+            # th = threading.Thread(target=operate_proj, args=(key,cm[0],cm[1],))
+            # th.start()
+            #operate_proj(key,cm[0],cm[1])
             # print(cm)
     return ''
 
