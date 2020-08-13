@@ -80,7 +80,7 @@ def TaranMatrix():
 
 @app.route('/testcaseCoverage/<testcaseId>')
 def TestcaseQuery(testcaseId):
-    query = "{testcases(testcaseId:" + testcaseId + "){signature sourceName coverage{line{lineId lineNumber sourceName}}}}"
+    query = "{testcases(testcaseId:" + testcaseId + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
     d = json.dumps(result.data)
     session.remove()
@@ -156,7 +156,7 @@ def varQuery():
 @app.route('/getAllTestcases/<sha>')
 def groupBySourceName(sha):
     bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
-    query="{testcases(buildId:" + str(bId) + "){signature sourceName testcaseId}}"
+    query="{testcases(buildId:" + str(bId) + "){signature sourceName testcaseId passed}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
     finalresult={}
     d = json.dumps(result.data)
@@ -219,7 +219,14 @@ def getTaranSourceInfo():
     session.remove()
     return '{}'.format(d)
 
-
+@app.route('/sourceLineCount/<sha>')
+def sourceLineCount(sha):
+    bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
+    linecounts=session.execute('select sourceName,count(*) from line where buildId='+str(bId)+' GROUP BY sourceName').fetchall()
+    dict={}
+    for src in linecounts:
+        dict[src[0].replace('.','/')]=src[1]
+    return '{}'.format(json.dumps(dict))
 
 @webhook.hook()  # Defines a handler for the 'push' event
 def on_push(data):

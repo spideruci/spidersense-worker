@@ -17,8 +17,11 @@ def database_operation(projectId,buildId,jsonpath,session):
         tList = []
         for test in testList:
             # only signature
+            passed=1
+            if test.endswith('_F'):
+                passed=0
             newCase = models.TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
-                                      signature=test.split('/', 2)[-1], passed=1)
+                                      signature=test.split('/', 2)[-1].split('_')[0], passed=passed)
             tList.append(newCase)
         #print('testcase over!')
         session.bulk_save_objects(tList)

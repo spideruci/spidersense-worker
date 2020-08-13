@@ -83,7 +83,8 @@ class Coverage(Base):
     testcase = relationship('TestCase', primaryjoin=(testcaseId == foreign(TestCase.testcaseId)), uselist=False)
     line = relationship('Line', primaryjoin=(lineId == foreign(Line.lineId)), uselist=False)
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@172.17.0.1:3306/spider-worker'
+#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@172.17.0.1:3306/spider-worker'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@172.17.0.1:3306/SpiderSenseWorker'
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -98,8 +99,12 @@ def database_operation(projectId,buildId,jsonpath):
         tList = []
         for test in testList:
             # only signature
-            newCase = TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
-                                      signature=test.split('/', 2)[-1], passed=1)
+            passed = 1
+            if test.endswith('_F'):
+                passed = 0
+                test=test[:-2]
+            newCase =TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
+                                      signature=test.split('/', 2)[-1], passed=passed)
             tList.append(newCase)
         session.bulk_save_objects(tList)
         session.commit()
@@ -166,8 +171,9 @@ def database_operation(projectId,buildId,jsonpath):
         print('build '+str(buildId)+' analyze over!')
     else:
         print('no such file')
-pid=sys.argv[1]
-bid=sys.argv[2]
-path=sys.argv[3]
-
-database_operation(pid,bid,path)
+# pid=sys.argv[1]
+# bid=sys.argv[2]
+# path=sys.argv[3]
+#
+# database_operation(pid,bid,path)
+database_operation(7,26,'/home/dongxinxiang/demo/tacoco_output/jsoup-cov-matrix.json')
