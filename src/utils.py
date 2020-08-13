@@ -20,8 +20,9 @@ def database_operation(projectId,buildId,jsonpath,session):
             passed=1
             if test.endswith('_F'):
                 passed=0
+                test=test[:-2]
             newCase = models.TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
-                                      signature=test.split('/', 2)[-1].split('_')[0], passed=passed)
+                                      signature=test.split('/', 2)[-1], passed=passed)
             tList.append(newCase)
         #print('testcase over!')
         session.bulk_save_objects(tList)
@@ -157,4 +158,6 @@ def getAutherandRepoFromGit(gitLink):
     name=gitLink.split('/')[-1].split('.')[0]
     return author,name
 
+# database_operation(17,27,'/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',sqlsession.session)
+# database_operation(17,28,'/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',sqlsession.session)
 #print(getprojs())

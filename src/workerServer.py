@@ -41,7 +41,7 @@ def operate_proj(git, commit,time,committer,message):
         pass
     else:
         print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
-        os.system('docker run --rm -d spider-container:1.3 /home/run-spider-worker ' + git + ' ' + commit +
+        os.system('docker run --rm -d spider-container:1.4 /home/run-spider-worker ' + git + ' ' + commit +
                   ' ' + str(projId) + ' ' + str(buildId))
         # subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
         #           ' ' + str(projId) + ' ' + str(buildId),shell=True,start_new_session=True)
@@ -162,7 +162,7 @@ def groupBySourceName(sha):
     d = json.dumps(result.data)
     dict = json.loads('{}'.format(d))
     for cases in dict['testcases']:
-        if cases['sourceName'] in result.data.keys():
+        if cases['sourceName'] in finalresult.keys():
             finalresult[cases['sourceName']].append({'testcaseId':cases['testcaseId'],'signature':cases['signature']})
         else:
             finalresult[cases['sourceName']]=[{'testcaseId':cases['testcaseId'],'signature':cases['signature']}]
@@ -191,8 +191,8 @@ def getSourceInfo(sha):
     author,repo=utils.getAutherandRepoFromGit(repolink)
     for sr in src:
         path=sr[0].replace('.','/')[:-5]
-        srclink='https://api.github.com/repos/'+author+'/'+repo+\
-                '/contents/src/main/java/'+path+'.java'
+        srclink='https://raw.githubusercontent.com/'+author+'/'+repo+'/'+sha+\
+                '/src/main/java/'+path+'.java'
         links.append(srclink)
     dict['sourceLinks']=links
     d = json.dumps(dict)
@@ -211,6 +211,7 @@ def getTaranSourceInfo():
     author,repo=utils.getAutherandRepoFromGit(repolink)
     for sr in src:
         path=sr[0].replace('.','/')[:-5]
+
         srclink='https://api.github.com/repos/'+author+'/'+repo+\
                 '/contents/src/main/java/'+path+'.java'
         links.append(srclink)

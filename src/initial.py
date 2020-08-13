@@ -5,9 +5,7 @@ from src import workerServer,utils
 # workerServer.operate_proj('https://github.com/sunflower0309/gson.git','acb8361f7a0bbf399b9ec81beb219cc40b22a07c',utils.githubTimeConvert('2020-07-29T07:28:50Z'))
 # workerServer.operate_proj('https://github.com/sunflower0309/jsoup.git','dc38b0aed68f0ece00a32dd927e56c4e50132ed9'
 #                           ,utils.githubTimeConvert('2020-07-20T21:36:02Z'))
-str="ensureArraysAreSorted().[engine:junit-jupiter]/[class:org.jsoup.parser.HtmlTreeBuilderStateTest]/[method:ensureArraysAreSorted()]_F"
-passed=0
-if str.endswith('_F'):
-    passed=1
-print(str[:-2])
-print(str.split('/', 2)[-1])
+workerServer.operate_proj('https://github.com/spideruci/Tarantula.git','7882a7c1925ae5092fade009fc7cc9f39309da82',
+                          utils.githubTimeConvert('2015-06-02T21:36:02Z'),'VijayKrishna Palepu','Using the PassFailPair\'s in the Localizer\'s API.')
+workerServer.operate_proj('https://github.com/spideruci/Tarantula.git','b9518b0e4a9e5872824e25a290f2f04a72991f1c',
+                          utils.githubTimeConvert('2015-06-03T03:00:13Z'),'VijayKrishna Palepu','Basic DataBuilder tests.')
