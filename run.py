@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from src import workerServer,utils
+from src import workerServer,app
 
 import logging
 if __name__ == '__main__':
@@ -9,4 +9,4 @@ if __name__ == '__main__':
     scheduler.start()
     handler=logging.FileHandler('flask.log')
     #workerServer.autopolling()
-    workerServer.app.run(use_reloader=False,debug=False)
+    app.run(use_reloader=False,debug=False)

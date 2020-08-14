@@ -23,7 +23,7 @@ models.Base.metadata.create_all(sqlsession.engine)
 
 app = Flask(__name__)
 cors = CORS(app)
-app.debug = True
+
 
 
 
