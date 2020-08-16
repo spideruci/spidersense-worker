@@ -163,9 +163,9 @@ def groupBySourceName(sha):
     dict = json.loads('{}'.format(d))
     for cases in dict['testcases']:
         if cases['sourceName'] in finalresult.keys():
-            finalresult[cases['sourceName']].append({'testcaseId':cases['testcaseId'],'signature':cases['signature']})
+            finalresult[cases['sourceName']].append({'testcaseId':cases['testcaseId'],'signature':cases['signature'],'passed':cases['passed']})
         else:
-            finalresult[cases['sourceName']]=[{'testcaseId':cases['testcaseId'],'signature':cases['signature']}]
+            finalresult[cases['sourceName']]=[{'testcaseId':cases['testcaseId'],'signature':cases['signature'],'passed':cases['passed']}]
     dd=json.dumps(finalresult)
     return '{}'.format(dd)
 
