@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="parameterized some scripts">
-      <change beforePath="$PROJECT_DIR$/SpiderSenseWorker.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SpiderSenseWorker.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run-spider-worker" beforeDir="false" afterPath="$PROJECT_DIR$/run-spider-worker" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/workerServer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +236,7 @@
       <workItem from="1596671244909" duration="1514000" />
       <workItem from="1596738134109" duration="23352000" />
       <workItem from="1597170748303" duration="2758000" />
-      <workItem from="1597187182321" duration="36789000" />
+      <workItem from="1597187182321" duration="38084000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -533,7 +532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597689448250</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="parameterized some scripts">
+      <created>1597689797888</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1597689797888</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -609,10 +615,10 @@
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1596485978714" />
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1597689456783">
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1597689805407">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1597689456783" />
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1597689805407" />
     <state x="164" y="96" width="1655" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596659016369">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
