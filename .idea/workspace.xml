@@ -19,12 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="fix endpoint">
-      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utilsfordocker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilsfordocker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/workerServer.py" afterDir="false" />
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="parameterized some scripts">
+      <change beforePath="$PROJECT_DIR$/SpiderSenseWorker.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SpiderSenseWorker.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-spider-worker" beforeDir="false" afterPath="$PROJECT_DIR$/run-spider-worker" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,7 +237,7 @@
       <workItem from="1596671244909" duration="1514000" />
       <workItem from="1596738134109" duration="23352000" />
       <workItem from="1597170748303" duration="2758000" />
-      <workItem from="1597187182321" duration="36427000" />
+      <workItem from="1597187182321" duration="36789000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -529,7 +526,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597599839645</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="parameterized some scripts">
+      <created>1597689448250</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1597689448250</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +569,8 @@
     <MESSAGE value="apache deploy" />
     <MESSAGE value="for microsoft azure" />
     <MESSAGE value="fix endpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix endpoint" />
+    <MESSAGE value="parameterized some scripts" />
+    <option name="LAST_COMMIT_MESSAGE" value="parameterized some scripts" />
   </component>
   <component name="WindowStateProjectService">
     <state x="833" y="297" key="#Notifications" timestamp="1594938065900">
@@ -604,10 +609,10 @@
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1596485978714" />
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1597599845716">
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1597689456783">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1597599845716" />
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1597689456783" />
     <state x="164" y="96" width="1655" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596659016369">
       <screen x="65" y="24" width="1853" height="864" />
     </state>

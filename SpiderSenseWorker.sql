@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : root
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
  Source Server Version : 80021
  Source Host           : 127.0.0.1:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 04/08/2020 16:23:38
+ Date: 17/08/2020 11:42:13
 */
 
 SET NAMES utf8mb4;
@@ -25,11 +25,13 @@ CREATE TABLE `build` (
   `buildId` int NOT NULL AUTO_INCREMENT,
   `projectId` int DEFAULT NULL,
   `commitId` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `committer` varchar(255) DEFAULT NULL,
   `timestamp` double DEFAULT NULL,
   PRIMARY KEY (`buildId`),
   KEY `proj_fr` (`projectId`),
   CONSTRAINT `proj_fr` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for coverage
@@ -59,7 +61,7 @@ CREATE TABLE `line` (
   KEY `line_build_fr` (`buildId`),
   CONSTRAINT `line_build_fr` FOREIGN KEY (`buildId`) REFERENCES `build` (`buildId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `line_proj_fr` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=162226 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for project
@@ -70,7 +72,7 @@ CREATE TABLE `project` (
   `projectId` int NOT NULL AUTO_INCREMENT,
   `projectLink` text,
   PRIMARY KEY (`projectId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for testcase
@@ -88,6 +90,6 @@ CREATE TABLE `testcase` (
   KEY `test_build_fr` (`buildId`),
   CONSTRAINT `test_build_fr` FOREIGN KEY (`buildId`) REFERENCES `build` (`buildId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `test_proj_fr` FOREIGN KEY (`projectId`) REFERENCES `project` (`projectId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20466 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
