@@ -1,3 +1,4 @@
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask_graphql import GraphQLView
 from src import models, utils, buildProj, schema,sqlsession
 import configparser
@@ -252,6 +253,10 @@ def autopolling():
             # print(cm)
     return ''
 
-
+@app.before_first_request
+def poll():
+    scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
+    scheduler.add_job(func=autopolling, trigger="interval", seconds=1200)
+    scheduler.start()
 
 
