@@ -255,6 +255,7 @@ def autopolling():
 
 @app.before_first_request
 def poll():
+    autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
     scheduler.add_job(func=autopolling, trigger="interval", seconds=1200)
     scheduler.start()
