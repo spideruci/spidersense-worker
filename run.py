@@ -4,9 +4,9 @@ from src import workerServer
 import logging
 if __name__ == '__main__':
 
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
     scheduler.add_job(func=workerServer.autopolling, trigger="interval", seconds=1200)
     scheduler.start()
     handler=logging.FileHandler('flask.log')
     #workerServer.autopolling()
-    workerServer.app.run(use_reloader=False,debug=False)
+    workerServer.app.run(use_reloader=False,debug=False,host='0.0.0.0')

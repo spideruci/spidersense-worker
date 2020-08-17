@@ -231,7 +231,7 @@ def sourceLineCount(sha):
 
 @webhook.hook()  # Defines a handler for the 'push' event
 def on_push(data):
-    operate_proj(data['repository']['clone_url'], data['after'],utils.githubTimeConvert(data['commits'][0]['timestamp']+25200)
+    operate_proj(data['repository']['clone_url'], data['after'],utils.githubTimeConvert(data['commits'][0]['timestamp'])+25200
                                     ,data['commits'][0]['committer']['name'],data['commits'][0]['message'])
 
 def autopolling():
