@@ -5,7 +5,7 @@ import requests
 import time
 import configparser
 from src import sqlsession
-
+from sqlalchemy import exists
 CONFIG_PATH='/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini'
 
 def database_operation(projectId,buildId,jsonpath,session):
@@ -136,6 +136,19 @@ def getcommits(author,name,time):
             else:
                 break
     return commits
+
+def getNewProjcommits(author,name):
+    commits=set()
+    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches').json()
+    for branch in branches:
+        sha=branch['commit']['sha']
+        #print(sha)
+        commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=1&sha='+sha).json()
+        for cm in commitbr:
+            commits.add(
+                (cm['sha'], githubTimeConvert(cm['commit']['committer']['date']), cm['commit']['committer']['name'],
+                 cm['commit']['message']))
+    return commits
 #print(getcommits('sunflower0309','gson',1596026889))
 
 def getAllCommits():
@@ -143,13 +156,23 @@ def getAllCommits():
     users,projlist=getprojs()
     for user in users:
         for name in projlist[user]:
-            link='https://github.com/'+user+'/'+name+'.git'
+            link = 'https://github.com/' + user + '/' + name + '.git'
+
+            if sqlsession.session.query(exists().where(models.Project.projectLink == link)).scalar() == False:
+                newProj = models.Project(projectName=name, projectLink=link)
+                sqlsession.session.add(newProj)
+                sqlsession.session.commit()
+
             projid=sqlsession.session.execute('select projectId from project where projectLink="'
                                                      + link +'"').fetchone()[0]
             lasttime=sqlsession.session.execute('select timestamp from build where projectId='
-                                                     + str(projid) +' order by timestamp desc').fetchone()[0]
-            commit=getcommits(user,name,lasttime)
-            allCommits[link]=commit
+                                                     + str(projid) +' order by timestamp desc').fetchone()
+            if lasttime==None:
+                commit=getNewProjcommits(user,name)
+                allCommits[link] = commit
+            else:
+                commit = getcommits(user, name, lasttime[0])
+                allCommits[link] = commit
     print(allCommits)
     return allCommits
 

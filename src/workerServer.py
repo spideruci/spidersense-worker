@@ -15,7 +15,7 @@ threadPool = ThreadPoolExecutor(max_workers=4)
 session = sqlsession.session
 
 cf = configparser.ConfigParser()
-cf.read('config.ini')
+cf.read(utils.CONFIG_PATH)
 
 models.Base.metadata.create_all(sqlsession.engine)
 
@@ -41,8 +41,8 @@ def operate_proj(git, commit,time,committer,message):
         pass
     else:
         print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
-        os.system('docker run --rm -d spider-container:1.5 /home/run-spider-worker ' + git + ' ' + commit +
-                  ' ' + str(projId) + ' ' + str(buildId))
+        os.system('docker run --rm -d '+cf.get('docker','image')+' /home/run-spider-worker ' + git + ' ' + commit +
+                  ' ' + str(projId) + ' ' + str(buildId)+' '+cf.get('docker','database'))
         # subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
         #           ' ' + str(projId) + ' ' + str(buildId),shell=True,start_new_session=True)
 
