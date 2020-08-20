@@ -8,6 +8,8 @@ from src import sqlsession
 from sqlalchemy import exists
 CONFIG_PATH='/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini'
 
+headers={'Authorization': 'token 6ab659bb94c661cdaac2b630d828e6e4463ff9c7'}
+
 def database_operation(projectId,buildId,jsonpath,session):
     if os.path.exists(jsonpath):
         f = open(jsonpath, 'r', encoding='utf-8')
@@ -122,11 +124,11 @@ def getprojs():
 
 def getcommits(author,name,time):
     commits=set()
-    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches').json()
+    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches',headers=headers).json()
     for branch in branches:
         sha=branch['commit']['sha']
         #print(sha)
-        commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha).json()
+        commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha,headers=headers).json()
         for cm in commitbr:
             #print(githubTimeConvert(cm['commit']['committer']['date']))
             if(githubTimeConvert(cm['commit']['committer']['date'])>time):
@@ -139,25 +141,29 @@ def getcommits(author,name,time):
 
 def getNewProjcommits(author,name):
     commits=set()
-    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches').json()
+    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches',headers=headers).json()
     for branch in branches:
         sha=branch['commit']['sha']
         #print(sha)
-        commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=1&sha='+sha).json()
+        commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=1&sha='+sha,headers=headers).json()
         for cm in commitbr:
             commits.add(
                 (cm['sha'], githubTimeConvert(cm['commit']['committer']['date']), cm['commit']['committer']['name'],
                  cm['commit']['message']))
     return commits
 #print(getcommits('sunflower0309','gson',1596026889))
+#6ab659bb94c661cdaac2b630d828e6e4463ff9c7
+
+
 
 def getAllCommits():
     allCommits= {}
     users,projlist=getprojs()
+    print(users,projlist)
     for user in users:
         for name in projlist[user]:
             link = 'https://github.com/' + user + '/' + name + '.git'
-
+            print(link)
             if sqlsession.session.query(exists().where(models.Project.projectLink == link)).scalar() == False:
                 newProj = models.Project(projectName=name, projectLink=link)
                 sqlsession.session.add(newProj)

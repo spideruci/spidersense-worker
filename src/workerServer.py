@@ -253,11 +253,15 @@ def autopolling():
             # print(cm)
     return ''
 
-@app.before_first_request
-def poll():
+@app.route('/startPolling')
+def startpoll():
     autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
     scheduler.add_job(func=autopolling, trigger="interval", seconds=1200)
     scheduler.start()
+    return 'start Polling'
 
-
+@app.route('/poll')
+def poll():
+    autopolling()
+    return 'poll'

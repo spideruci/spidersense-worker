@@ -9,4 +9,9 @@ from src import workerServer,utils
 #                           utils.githubTimeConvert('2015-06-02T21:36:02Z'),'VijayKrishna Palepu','Using the PassFailPair\'s in the Localizer\'s API.')
 # workerServer.operate_proj('https://github.com/spideruci/Tarantula.git','b9518b0e4a9e5872824e25a290f2f04a72991f1c',
 #                           utils.githubTimeConvert('2015-06-03T03:00:13Z'),'VijayKrishna Palepu','Basic DataBuilder tests.')
-print(utils.getAllCommits())
+# import requests
+# print(requests.get('https://api.github.com/rate_limit',headers=utils.headers).json())
+# requests.get('https://api.github.com/repos/'+'sunflower0309'+'/'+'commons-io'+'/branches',headers=utils.headers).json()
+# print(requests.get('https://api.github.com/rate_limit',headers=utils.headers).json())
+workerServer.operate_proj('https://github.com/apache/commons-io.git','5a1de55365cc31805790b3967bb18087060d4c40',
+                         utils.githubTimeConvert('2020-08-19T05:52:53Z'),'GitHub',"Bump mockito-core from 3.4.6 to 3.5.2\n\nBumps [mockito-core](https://github.com/mockito/mockito) from 3.4.6 to 3.5.2.\n- [Release notes](https://github.com/mockito/mockito/releases)\n- [Commits](https://github.com/mockito/mockito/compare/v3.4.6...v3.5.2)\n\nSigned-off-by: dependabot[bot] <support@github.com>")
