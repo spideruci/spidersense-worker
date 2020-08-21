@@ -7,8 +7,10 @@ import configparser
 from src import sqlsession
 from sqlalchemy import exists
 CONFIG_PATH='/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini'
-
-headers={'Authorization': 'token 6ab659bb94c661cdaac2b630d828e6e4463ff9c7'}
+cfg=configparser.ConfigParser()
+cfg.read(CONFIG_PATH)
+token=cfg.get('polling','token')
+headers={'Authorization': 'token '+token}
 
 def database_operation(projectId,buildId,jsonpath,session):
     if os.path.exists(jsonpath):

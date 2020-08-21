@@ -5,18 +5,20 @@ import configparser
 import json
 import subprocess
 from github_webhook import Webhook
-import time
 from flask import Flask
 from flask_cors import CORS
 import os
 import threading
 from concurrent.futures import ThreadPoolExecutor
-
-threadPool = ThreadPoolExecutor(max_workers=4)
-session = sqlsession.session
-
+import docker
+import time
 cf = configparser.ConfigParser()
 cf.read(utils.CONFIG_PATH)
+MAX_CONTAINER=int(cf.get('polling','maximum-container'))
+threadPool = ThreadPoolExecutor(max_workers=MAX_CONTAINER)
+session = sqlsession.session
+
+
 
 models.Base.metadata.create_all(sqlsession.engine)
 
@@ -33,17 +35,21 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
                                                            schema=schema.dataschema, graphiql=True,
                                                            get_context=lambda: {'session': session}))
 
+client = docker.Client(base_url='unix:///var/run/docker.sock')
 
-
-def operate_proj(git, commit,time,committer,message):
-    exist, buildId, projId, name = buildProj.build(git, commit, time,committer,message)
+def operate_proj(git, commit,gittime,committer,message):
+    exist, buildId, projId, name = buildProj.build(git, commit, gittime,committer,message)
     #print(exist,buildId,projId,name)
     if exist == True:
         pass
     else:
         print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
-        os.system('docker run --rm -d '+cf.get('docker','image')+' /home/run-spider-worker ' + git + ' ' + commit +
-                  ' ' + str(projId) + ' ' + str(buildId)+' '+cf.get('docker','database'))
+        os.system('docker run --rm -d ' + cf.get('docker',
+                                                 'image') + ' /home/run-spider-worker ' + git + ' ' + commit +
+                  ' ' + str(projId) + ' ' + str(buildId) + ' ' + cf.get('docker', 'database'))
+        time.sleep(1)
+        while len(client.containers())>=MAX_CONTAINER:
+            time.sleep(3)
         # subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
         #           ' ' + str(projId) + ' ' + str(buildId),shell=True,start_new_session=True)
 
