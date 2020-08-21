@@ -78,7 +78,6 @@ def saveLines(sourceList,projectId,buildId, session):
         session.bulk_save_objects(lines)
         session.commit()
         lines.clear()
-        #print(fullname+'lines over!')
 
 def makeTestDict(session,projectId,buildId):
     testIdDict = {}  # only one query, put it in the dict, less connect to database
@@ -124,19 +123,17 @@ def getprojs():
     return keys,proj_list
 
 
-def getcommits(author,name,time):
+def getcommits(author,name,gtime):
     commits=set()
     branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches',headers=headers).json()
     for branch in branches:
         sha=branch['commit']['sha']
-        #print(sha)
         commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=100&sha='+sha,headers=headers).json()
         for cm in commitbr:
-            #print(githubTimeConvert(cm['commit']['committer']['date']))
-            if(githubTimeConvert(cm['commit']['committer']['date'])>time):
+            if(githubTimeConvert(cm['commit']['committer']['date'])>gtime):
+
                 commits.add((cm['sha'],githubTimeConvert(cm['commit']['committer']['date']),cm['commit']['committer']['name'],
                              cm['commit']['message']))
-                #print(commits)
             else:
                 break
     return commits
@@ -149,13 +146,11 @@ def getNewProjcommits(author,name):
         #print(sha)
         commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=1&sha='+sha,headers=headers).json()
         for cm in commitbr:
-            commits.add(
-                (cm['sha'], githubTimeConvert(cm['commit']['committer']['date']), cm['commit']['committer']['name'],
-                 cm['commit']['message']))
+            if time.time()-githubTimeConvert(cm['commit']['committer']['date'])>7776000:#deprecate too old commits,older than 90 days
+                commits.add(
+                    (cm['sha'], githubTimeConvert(cm['commit']['committer']['date']), cm['commit']['committer']['name'],
+                     cm['commit']['message']))
     return commits
-#print(getcommits('sunflower0309','gson',1596026889))
-#6ab659bb94c661cdaac2b630d828e6e4463ff9c7
-
 
 
 def getAllCommits():
@@ -189,6 +184,4 @@ def getAutherandRepoFromGit(gitLink):
     name=gitLink.split('/')[-1].split('.')[0]
     return author,name
 
-# database_operation(17,27,'/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',sqlsession.session)
-# database_operation(17,28,'/home/dongxinxiang/demo/tacoco_output/Tarantula-cov-matrix.json',sqlsession.session)
-#print(getprojs())
+

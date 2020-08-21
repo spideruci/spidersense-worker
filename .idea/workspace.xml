@@ -19,12 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="fix bugs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="limit maximum number of docker container">
       <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/workerServer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +238,7 @@
       <workItem from="1596738134109" duration="23352000" />
       <workItem from="1597170748303" duration="2758000" />
       <workItem from="1597187182321" duration="41250000" />
-      <workItem from="1597854302718" duration="17724000" />
+      <workItem from="1597854302718" duration="18055000" />
     </task>
     <task id="LOCAL-00001" summary="version demo">
       <created>1593567402017</created>
@@ -572,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597882298003</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="limit maximum number of docker container">
+      <created>1598029987771</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1598029987772</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -611,7 +615,8 @@
     <MESSAGE value="parameterized some scripts" />
     <MESSAGE value="fix webhook" />
     <MESSAGE value="fix bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bugs" />
+    <MESSAGE value="limit maximum number of docker container" />
+    <option name="LAST_COMMIT_MESSAGE" value="limit maximum number of docker container" />
   </component>
   <component name="WindowStateProjectService">
     <state x="833" y="297" key="#Notifications" timestamp="1594938065900">
