@@ -58,7 +58,7 @@ def operate_proj(git, commit,gittime,committer,message):
 
 
 
-@app.route('/test/project/<projectId>')
+@app.route('/getProject/<projectId>')
 def projQuery(projectId):
     query = "{projects(projectId:" + projectId + "){ projectName projectLink}}"
     print(projectId)
