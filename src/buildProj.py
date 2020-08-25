@@ -4,10 +4,6 @@ from sqlalchemy import exists
 from src import sqlsession
 
 
-# cf = configparser.ConfigParser()
-# cf.read('/home/DongxinXiang/PycharmProjects/spidersense-worker/config.ini')
-# tacocopath = cf.get('filepath', 'tacoco-path')
-#print(tacocopath)
 
 session = sqlsession.session
 
@@ -30,23 +26,3 @@ def build(git,commit,time,committer,message):
     buildId=session.query(models.Build).filter(models.Build.commitId == commit, models.Build.projectId == projId).one().buildId
 
     return exist,buildId,projId,name
-
-
-#build('https://github.com/spideruci/Tarantula.git')
-
-#
-
-#s=os.system('git ls-remote https://github.com/sunflower0309/jsoup.git HEAD')
-
-
-
-# tacocopath = cf.get('filepath', 'tacoco-path')
-# projpath = cf.get('filepath', 'project-path')
-# scriptpath = cf.get('filepath', 'run-tacoco-path')
-# os.chdir(projpath)
-# os.system('mvn compile test-compile')
-# command = scriptpath + ' ' + projpath + ' ' + tacocopath
-# print(command)
-# os.system(command)
-#os.system('/home/dongxinxiang/tacoco/scripts/run-tacoco /home/dongxinxiang/commons-io /home/dongxinxiang/tacoco')
-#'/home/dongxinxiang/tacoco/scripts/run-tacoco /home/dongxinxiang/commons-io /home/dongxinxiang/tacoco'

@@ -4,12 +4,10 @@ from src import models
 import requests
 import time
 import configparser
-from src import sqlsession
+from src import sqlsession,cfgreader
 from sqlalchemy import exists
-CONFIG_PATH='/home/dongxinxiang/PycharmProjects/spidersense-worker/config.ini'
-cfg=configparser.ConfigParser()
-cfg.read(CONFIG_PATH)
-token=cfg.get('polling','token')
+
+token=cfgreader.cf.get('polling','token')
 headers={'Authorization': 'token '+token}
 
 def database_operation(projectId,buildId,jsonpath,session):
@@ -116,7 +114,7 @@ def githubTimeCompare(gittime1,gittime2):
 
 def getprojs():
     config = configparser.ConfigParser()
-    config.read(CONFIG_PATH)
+    config.read(cfgreader.CONFIG_PATH)
     infolist = config.get("polling", "proj-list")
     proj_list = json.loads(infolist)
     keys = list(proj_list.keys())
@@ -125,6 +123,7 @@ def getprojs():
 
 def getcommits(author,name,gtime):
     commits=set()
+    print(author,name)
     branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches',headers=headers).json()
     for branch in branches:
         sha=branch['commit']['sha']
@@ -140,13 +139,14 @@ def getcommits(author,name,gtime):
 
 def getNewProjcommits(author,name):
     commits=set()
-    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches',headers=headers).json()
+    branches=requests.get('https://api.github.com/repos/'+author+'/'+name+'/branches?per_page=1000',headers=headers).json()
     for branch in branches:
         sha=branch['commit']['sha']
         #print(sha)
         commitbr=requests.get('https://api.github.com/repos/'+author+'/'+name+'/commits?per_page=1&sha='+sha,headers=headers).json()
         for cm in commitbr:
-            if time.time()-githubTimeConvert(cm['commit']['committer']['date'])>7776000:#deprecate too old commits,older than 90 days
+            #print(time.time()-githubTimeConvert(cm['commit']['committer']['date']))
+            if time.time()-githubTimeConvert(cm['commit']['committer']['date'])<7776000:#deprecate too old commits,older than 90 days
                 commits.add(
                     (cm['sha'], githubTimeConvert(cm['commit']['committer']['date']), cm['commit']['committer']['name'],
                      cm['commit']['message']))
@@ -172,9 +172,11 @@ def getAllCommits():
                                                      + str(projid) +' order by timestamp desc').fetchone()
             if lasttime==None:
                 commit=getNewProjcommits(user,name)
+                print(len(commit))
                 allCommits[link] = commit
             else:
                 commit = getcommits(user, name, lasttime[0])
+                print(len(commit))
                 allCommits[link] = commit
     print(allCommits)
     return allCommits

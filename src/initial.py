@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 # print(requests.get('https://api.github.com/rate_limit',headers=utils.headers).json())
 # requests.get('https://api.github.com/repos/'+'sunflower0309'+'/'+'commons-io'+'/branches',headers=utils.headers).json()
 # print(requests.get('https://api.github.com/rate_limit',headers=utils.headers).json())
-workerServer.autopolling()
 
 #print(client.containers(all=True),len(client.containers(all=True)))
+print(time.time())
+print(utils.getNewProjcommits('apache','flink'))

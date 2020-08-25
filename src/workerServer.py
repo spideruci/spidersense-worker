@@ -1,9 +1,9 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask_graphql import GraphQLView
-from src import models, utils, buildProj, schema,sqlsession
+from src import models, utils, buildProj, schema,sqlsession,cfgreader
 import configparser
 import json
-import subprocess
+from queue import Queue
 from github_webhook import Webhook
 from flask import Flask
 from flask_cors import CORS
@@ -12,10 +12,17 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 import docker
 import time
-cf = configparser.ConfigParser()
-cf.read(utils.CONFIG_PATH)
+cf = cfgreader.cf
+
+
+class BoundedThreadPoolExecutor(ThreadPoolExecutor):
+    def __init__(self, max_workers, max_waiting_tasks, *args, **kwargs):
+        super().__init__(max_workers=max_workers, *args, **kwargs)
+        self._work_queue = Queue(maxsize=max_waiting_tasks)
 MAX_CONTAINER=int(cf.get('polling','maximum-container'))
-threadPool = ThreadPoolExecutor(max_workers=MAX_CONTAINER)
+MAX_QUEUE=int(cf.get('polling','maximum-queue'))
+DOCKER_SOCK=str(cf.get('docker','sockpath'))
+#threadPool = ThreadPoolExecutor(max_workers=MAX_CONTAINER)
 session = sqlsession.session
 
 
@@ -35,7 +42,7 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql',
                                                            schema=schema.dataschema, graphiql=True,
                                                            get_context=lambda: {'session': session}))
 
-client = docker.Client(base_url='unix:///var/run/docker.sock')
+client = docker.Client(base_url=DOCKER_SOCK)
 
 def operate_proj(git, commit,gittime,committer,message):
     exist, buildId, projId, name = buildProj.build(git, commit, gittime,committer,message)
@@ -44,14 +51,16 @@ def operate_proj(git, commit,gittime,committer,message):
         pass
     else:
         print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
-        os.system('docker run --rm -d ' + cf.get('docker',
+        os.system('docker run --rm -d --name ' +commit +' '+ cf.get('docker',
                                                  'image') + ' /home/run-spider-worker ' + git + ' ' + commit +
                   ' ' + str(projId) + ' ' + str(buildId) + ' ' + cf.get('docker', 'database'))
-        time.sleep(1)
-        while len(client.containers())>=MAX_CONTAINER:
-            time.sleep(3)
-        # subprocess.Popen('docker run --rm -d > /home/dongxinxiang/docker.log spider-container:1.0 /home/run-spider-worker ' + git + ' ' + commit +
-        #           ' ' + str(projId) + ' ' + str(buildId),shell=True,start_new_session=True)
+        time.sleep(3)
+        while 1:
+            namelist=[i['Names'][0][1:] for i in client.containers(all=True)]
+            if commit in namelist:
+                time.sleep(3)
+            else:
+                break
 
 #-d > /home/dongxinxiang/docker.log
 
@@ -140,25 +149,7 @@ def varQuery():
     session.remove()
     return '{}'.format(d)
 
-# @app.route('/getTaranTestcases')
-# def groupBySource(sha):
-#     bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
-#     sources=session.execute('select DISTINCT sourceName from testcase where buildId=25').fetchall()
-#     #print(sources)
-#     query='{'
-#     index=0
-#     for src in sources:
-#         srcname=src[0]
-#         qname=src[0].split('.')[-1][:-1]
-#         subq=qname+':testcases(sourceName:"'+srcname+'"){testcaseId signature}'
-#         query+=subq
-#     query+='}'
-#     print(query)
-#     result = schema.dataschema.execute(query, context_value={'session': session})
-#     result.data['src']=[src[0].split('.')[-1][:-1] for src in sources]
-#     d = json.dumps(result.data)
-#     session.remove()
-#     return '{}'.format(d)
+
 
 @app.route('/getAllTestcases/<sha>')
 def groupBySourceName(sha):
@@ -250,9 +241,11 @@ def autopolling():
     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     keys=allCommits.keys()
     #print(allCommits)
-    for key in keys:
-        for cm in allCommits[key]:
-            threadPool.submit(operate_proj,key,cm[0],cm[1],cm[2],cm[3])
+    with BoundedThreadPoolExecutor(MAX_CONTAINER, MAX_QUEUE) as executor:
+        for key in keys:
+            for cm in allCommits[key]:
+                time.sleep(1)
+                executor.submit(operate_proj,key,cm[0],cm[1],cm[2],cm[3])
             # th = threading.Thread(target=operate_proj, args=(key,cm[0],cm[1],))
             # th.start()
             #operate_proj(key,cm[0],cm[1])
@@ -263,7 +256,7 @@ def autopolling():
 def startpoll():
     autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
-    scheduler.add_job(func=autopolling, trigger="interval", seconds=1200)
+    scheduler.add_job(func=autopolling, trigger="interval", seconds=1800)
     scheduler.start()
     return 'start Polling'
 
