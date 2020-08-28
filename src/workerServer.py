@@ -250,7 +250,8 @@ def autopolling():
 def dockercheck():
     for container in client.containers(all=True):
         if time.time()-container['Created']>=600 and container['Image'].startswith('sunflower0309/spider-container'):
-            os.system('docker rm '+container['Id'])
+            os.system('docker stop '+container['Id']+' && docker rm '+container['Id'])
+
 
 @app.route('/startPolling')
 def startpoll():
