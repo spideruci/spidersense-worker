@@ -234,13 +234,8 @@ def on_push(data):
 
 def autopolling():
     allCommits=utils.getAllCommits()
-    # if len(allCommits)==0:
-    #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),' no new commits')
-    # else:
-    #     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), ' get new commits!!!!!')
     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     keys=allCommits.keys()
-    #print(allCommits)
     with BoundedThreadPoolExecutor(MAX_CONTAINER, MAX_QUEUE) as executor:
         for key in keys:
             for cm in allCommits[key]:
@@ -252,11 +247,17 @@ def autopolling():
             # print(cm)
     return ''
 
+def dockercheck():
+    for container in client.containers(all=True):
+        if time.time()-container['Created']>=600 and container['Image'].startswith('sunflower0309/spider-container'):
+            os.system('docker rm '+container['Id'])
+
 @app.route('/startPolling')
 def startpoll():
     autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
     scheduler.add_job(func=autopolling, trigger="interval", seconds=1800)
+    scheduler.add_job(func=autopolling, trigger="interval", seconds=900)
     scheduler.start()
     return 'start Polling'
 
