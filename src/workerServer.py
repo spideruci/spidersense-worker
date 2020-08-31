@@ -22,6 +22,7 @@ class BoundedThreadPoolExecutor(ThreadPoolExecutor):
 MAX_CONTAINER=int(cf.get('polling','maximum-container'))
 MAX_QUEUE=int(cf.get('polling','maximum-queue'))
 DOCKER_SOCK=str(cf.get('docker','sockpath'))
+MAX_LIFE=int(cf.get('docker','maxlife'))
 #threadPool = ThreadPoolExecutor(max_workers=MAX_CONTAINER)
 session = sqlsession.session
 
@@ -249,7 +250,7 @@ def autopolling():
 
 def dockercheck():
     for container in client.containers(all=True):
-        if time.time()-container['Created']>=600 and container['Image'].startswith('sunflower0309/spider-container'):
+        if time.time()-container['Created']>=MAX_LIFE and container['Image'].startswith('sunflower0309/spider-container'):
             os.system('docker stop '+container['Id']+' && docker rm '+container['Id'])
 
 
@@ -258,7 +259,7 @@ def startpoll():
     autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
     scheduler.add_job(func=autopolling, trigger="interval", seconds=1800)
-    scheduler.add_job(func=autopolling, trigger="interval", seconds=900)
+    scheduler.add_job(func=dockercheck, trigger="interval", seconds=900)
     scheduler.start()
     return 'start Polling'
 
