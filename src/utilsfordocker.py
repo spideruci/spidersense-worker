@@ -162,7 +162,10 @@ def database_operation(projectId,buildId,jsonpath):
             for tests in activeTests:
                 matrix = src['testStmtMatrix'][testcaseindex]  # single matrix
                 testcaseinfo = testList[tests]
-                testcaseId = testIdDict[testcaseinfo.split('/')[1] + testcaseinfo.split('/', 2)[-1]]
+                testkey=testcaseinfo.split('/')[1] + testcaseinfo.split('/', 2)[-1]
+                if testkey.endswith('_F'):
+                    testkey=testkey[:-2]
+                testcaseId = testIdDict[testkey]
                 for l in range(len(matrix)):
                     if matrix[l] == True:
                         lineId = lineIdDict[fullname + str(l + startLine)]

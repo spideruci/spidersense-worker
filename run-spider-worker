@@ -39,4 +39,4 @@ mvn compile test-compile
 /home/tacoco/scripts/run-tacoco /home/sut /home/tacoco
 cd /home
 
-python3 ./utilsfordocker.py $3 $4 /home/tacoco/tacoco_output/sut-cov-matrix.json $5
+python3 ./utilsfordocker.py $3 $4 /home/tacoco/tacoco_output/sut-cov-matrix.json $5 $6

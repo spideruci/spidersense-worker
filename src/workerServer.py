@@ -5,7 +5,7 @@ import configparser
 import json
 from queue import Queue
 from github_webhook import Webhook
-from flask import Flask
+from flask import Flask,request
 from flask_cors import CORS
 import os
 import threading
@@ -23,6 +23,7 @@ MAX_CONTAINER=int(cf.get('polling','maximum-container'))
 MAX_QUEUE=int(cf.get('polling','maximum-queue'))
 DOCKER_SOCK=str(cf.get('docker','sockpath'))
 MAX_LIFE=int(cf.get('docker','maxlife'))
+PASSWD=str(cf.get('docker','password'))
 #threadPool = ThreadPoolExecutor(max_workers=MAX_CONTAINER)
 session = sqlsession.session
 
@@ -54,7 +55,7 @@ def operate_proj(git, commit,gittime,committer,message):
         print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
         os.system('docker run --rm -d --name ' +commit +' '+ cf.get('docker',
                                                  'image') + ' /home/run-spider-worker ' + git + ' ' + commit +
-                  ' ' + str(projId) + ' ' + str(buildId) + ' ' + cf.get('docker', 'database'))
+                  ' ' + str(projId) + ' ' + str(buildId) + ' ' + cf.get('docker', 'database')+' '+PASSWD)
         time.sleep(3)
         while 1:
             namelist=[i['Names'][0][1:] for i in client.containers(all=True)]
@@ -102,6 +103,17 @@ def TestcaseQuery(testcaseId):
     d = json.dumps(result.data)
     session.remove()
     return '{}'.format(d)
+
+@app.route('/batchTestcaseCoverage',methods=['POST'])
+def batchTestcaseQuery():
+    tlist=request.form['tlist']
+    query=''
+    for tid in tlist.split(','):
+        query+='t'+tid+":testcases(testcaseId:" + tid + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}"
+
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    session.remove()
+    return result.data
 
 @app.route('/commitCoverage/<sha>')
 def CommitCoverageQuery(sha):
@@ -241,6 +253,7 @@ def autopolling():
         for key in keys:
             for cm in allCommits[key]:
                 time.sleep(1)
+                #print(key)
                 executor.submit(operate_proj,key,cm[0],cm[1],cm[2],cm[3])
             # th = threading.Thread(target=operate_proj, args=(key,cm[0],cm[1],))
             # th.start()
@@ -254,14 +267,15 @@ def dockercheck():
             os.system('docker stop '+container['Id']+' && docker rm '+container['Id'])
 
 
-@app.route('/startPolling')
+#@app.route('/startPolling')
+@app.before_first_request
 def startpoll():
-    autopolling()
+    # autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
-    scheduler.add_job(func=autopolling, trigger="interval", seconds=1800)
-    scheduler.add_job(func=dockercheck, trigger="interval", seconds=900)
     scheduler.start()
-    return 'start Polling'
+    scheduler.add_job(func=autopolling, trigger="interval", seconds=1800)
+    scheduler.add_job(func=dockercheck, trigger="interval", seconds=60)
+    scheduler.print_jobs()
 
 @app.route('/poll')
 def poll():
