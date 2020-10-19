@@ -53,7 +53,7 @@ def operate_proj(git, commit,gittime,committer,message):
         pass
     else:
         print("%s threading is printed %s, %s" % (threading.current_thread().name,git,commit))
-        os.system('docker run --rm -d --name ' +commit +' '+ cf.get('docker',
+        os.system('docker run --rm --name ' +commit +' '+ cf.get('docker',
                                                  'image') + ' /home/run-spider-worker ' + git + ' ' + commit +
                   ' ' + str(projId) + ' ' + str(buildId) + ' ' + cf.get('docker', 'database')+' '+PASSWD)
         time.sleep(3)
@@ -67,6 +67,23 @@ def operate_proj(git, commit,gittime,committer,message):
 #-d > /home/dongxinxiang/docker.log
 
 
+@app.route('/mainEntry',methods=['POST'])
+def executeGraphQLQuery():
+    query=request.form['query']
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    session.remove()
+    return result.data
+
+@app.route('/batchTestcaseCoverage',methods=['POST'])
+def batchTestcaseQuery():
+    tlist=request.form['tlist']
+    query='{'
+    for tid in tlist.split(','):
+        query+='t'+tid+":testcases(testcaseId:" + tid + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}"
+    query+='}'
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    session.remove()
+    return result.data
 
 
 @app.route('/getProject/<projectId>')
@@ -100,20 +117,9 @@ def TaranMatrix():
 def TestcaseQuery(testcaseId):
     query = "{testcases(testcaseId:" + testcaseId + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}}"
     result = schema.dataschema.execute(query, context_value={'session': session})
-    d = json.dumps(result.data)
-    session.remove()
-    return '{}'.format(d)
-
-@app.route('/batchTestcaseCoverage',methods=['POST'])
-def batchTestcaseQuery():
-    tlist=request.form['tlist']
-    query=''
-    for tid in tlist.split(','):
-        query+='t'+tid+":testcases(testcaseId:" + tid + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}"
-
-    result = schema.dataschema.execute(query, context_value={'session': session})
-    session.remove()
     return result.data
+
+
 
 @app.route('/commitCoverage/<sha>')
 def CommitCoverageQuery(sha):
