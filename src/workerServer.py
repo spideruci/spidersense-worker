@@ -96,23 +96,6 @@ def projQuery(projectId):
     return '{}'.format(d)
 
 
-@app.route('/getTaranCoverage')
-def TaranQuery():
-    query = "{builds(buildId:25){ line {lineId lineNumber sourceName coverage { testcase { testcaseId sourceName signature }}}}}"
-    result = schema.dataschema.execute(query, context_value={'session': session})
-    d = json.dumps(result.data)
-    session.remove()
-    return '{}'.format(d)
-
-@app.route('/TaranMatrix')
-def TaranMatrix():
-    query="{lines(buildId:25){lineId sourceName lineNumber coverage{testcaseId}}}"
-    result = schema.dataschema.execute(query, context_value={'session': session})
-    d = json.dumps(result.data)
-    session.remove()
-    return '{}'.format(d)
-
-
 @app.route('/testcaseCoverage/<testcaseId>')
 def TestcaseQuery(testcaseId):
     query = "{testcases(testcaseId:" + testcaseId + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}}"
@@ -218,24 +201,9 @@ def getSourceInfo(sha):
 
 
 
-@app.route('/getTaranSourceInfo')
+@app.route('/deployTest')
 def getTaranSourceInfo():
-    dict={}
-    links=[]
-    src=session.execute('select distinct sourceName from line where buildId=25').fetchall()
-    projId=session.execute('select projectId from build where buildId=25').fetchone()[0]
-    repolink=session.execute('select projectLink from project where projectId='+str(projId)).fetchone()[0]
-    author,repo=utils.getAutherandRepoFromGit(repolink)
-    for sr in src:
-        path=sr[0].replace('.','/')[:-5]
-
-        srclink='https://api.github.com/repos/'+author+'/'+repo+\
-                '/contents/src/main/java/'+path+'.java'
-        links.append(srclink)
-    dict['sourceLinks']=links
-    d = json.dumps(dict)
-    session.remove()
-    return '{}'.format(d)
+    return 'deploy success'
 
 @app.route('/sourceLineCount/<sha>')
 def sourceLineCount(sha):
@@ -273,10 +241,9 @@ def dockercheck():
             os.system('docker stop '+container['Id']+' && docker rm '+container['Id'])
 
 
-#@app.route('/startPolling')
+
 @app.before_first_request
 def startpoll():
-    # autopolling()
     scheduler = BackgroundScheduler(timezone='America/Los_Angeles')
     scheduler.start()
     scheduler.add_job(func=autopolling, trigger="interval", seconds=1800)
