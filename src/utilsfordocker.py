@@ -87,8 +87,9 @@ pid=sys.argv[1]
 bid=sys.argv[2]
 path=sys.argv[3]
 database=sys.argv[4]
+passwd=sys.argv[5]
 #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@172.17.0.1:3306/spider-worker'
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:313461@172.17.0.1:3306/'+database
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:'+passwd+'@172.17.0.1:3306/'+database
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -101,15 +102,22 @@ def database_operation(projectId,buildId,jsonpath):
         testList = dict_data['testsIndex']
         testList.pop(-1)
         tList = []
+        haveFalse=False
         for test in testList:
             # only signature
             passed = 1
             if test.endswith('_F'):
                 passed = 0
                 test=test[:-2]
+                haveFalse=True
             newCase =TestCase(projectId=projectId, buildId=buildId, sourceName=test.split('/')[1],
                                       signature=test.split('/', 2)[-1], passed=passed)
             tList.append(newCase)
+        if haveFalse==False:
+            session.query(Build).filter(Build.buildId==buildId).delete()
+            session.commit()
+            session.close()
+            return
         session.bulk_save_objects(tList)
         session.commit()
         #
@@ -179,6 +187,5 @@ def database_operation(projectId,buildId,jsonpath):
         print('build '+str(buildId)+' analyze over!')
     else:
         print('no such file')
-
 
 database_operation(pid,bid,path)

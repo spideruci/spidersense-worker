@@ -21,7 +21,11 @@ def build(git, commit, time, committer, message):
     if session.query(buildQuery.exists()).scalar() == False:
         newBuild = models.Build(commitId=commit, projectId=projId, timestamp=time, committer=committer, message=message)
         session.add(newBuild)
-        session.commit()
+        try:
+            session.commit()
+        except Exception as e:
+            print(str(e))
+
         exist = False
     buildId = session.query(models.Build).filter(models.Build.commitId == commit,
                                                  models.Build.projectId == projId).one().buildId

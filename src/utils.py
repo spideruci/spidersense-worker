@@ -186,4 +186,8 @@ def getAutherandRepoFromGit(gitLink):
     name=gitLink.split('/')[-1].split('.')[0]
     return author,name
 
-
+def getPullRequests(author,name):
+    pullReqs=requests.get('https://api.github.com/repos/'+author+'/'+name+'/pulls?per_page=5',headers=headers).json()
+    for reqs in pullReqs:
+        commit=reqs['head']['sha']
+        print(commit)

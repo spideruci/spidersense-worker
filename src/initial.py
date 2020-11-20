@@ -1,4 +1,4 @@
-from src import workerServer,utils,utilsfordocker
+from src import workerServer,utils,sqlsession,models#,utilsfordocker
 import time
 import docker
 from concurrent.futures import ThreadPoolExecutor
@@ -15,6 +15,11 @@ from concurrent.futures import ThreadPoolExecutor
 # requests.get('https://api.github.com/repos/'+'sunflower0309'+'/'+'commons-io'+'/branches',headers=utils.headers).json()
 # print(requests.get('https://api.github.com/rate_limit',headers=utils.headers).json())
 #workerServer.poll()
+# ses=sqlsession.session
+# ses.query(models.Build).filter(models.Build.buildId==29).delete()
+# ses.commit()
+utils.getPullRequests('google','gson')
+#print()
 #utilsfordocker.database_operation(74,246,'/home/dongxinxiang/tacoco/tacoco_output/mid_example-cov-matrix.json')
 #utils.getAllCommits()
 #workerServer.dockercheck()
