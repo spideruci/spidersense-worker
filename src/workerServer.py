@@ -75,16 +75,33 @@ def executeGraphQLQuery():
     return result.data
 
 @app.route('/batchTestcaseCoverage',methods=['POST'])
-def batchTestcaseQuery():
-    tlist=request.form['tlist']
-    query='{'
-    for tid in tlist.split(','):
-        query+='t'+tid+":testcases(testcaseId:" + tid + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}"
-    query+='}'
-    result = schema.dataschema.execute(query, context_value={'session': session})
-    session.remove()
-    return result.data
-
+# def batchTestcaseQuery():
+#     tlist=request.form['tlist']
+#     query='{'
+#     for tid in tlist.split(','):
+#         query+='t'+tid+":testcases(testcaseId:" + tid + "){signature sourceName passed coverage{line{lineId lineNumber sourceName}}}"
+#     query+='}'
+#     result = schema.dataschema.execute(query, context_value={'session': session})
+#     session.remove()
+#     return result.data
+def BatchQuery1():
+    tcases=request.form['tlist']
+    res={}
+    for t in tcases.split(','):
+        testinfo={}
+        coverage=[]
+        coverageres=session.execute('SELECT line.lineId,lineNumber,sourceName FROM coverage LEFT JOIN line on coverage.lineId=line.lineId where testcaseId='+str(t)).fetchall()
+        for c in coverageres:
+            cov={'lineId':c[0],"lineNumber":c[1],'sourceName':c[2]}
+            outercov={'line':cov}
+            coverage.append(outercov)
+        testinfo['coverage']=coverage
+        otherinfo=session.execute('select sourceName,passed,signature from testcase where testcaseId='+str(t)).fetchone()
+        testinfo['sourceName']=otherinfo[0]
+        testinfo['passed']=otherinfo[1]
+        testinfo['signature']=otherinfo[2]
+        res['t'+str(t)]=[testinfo]
+    return res
 
 @app.route('/getProject/<projectId>')
 def projQuery(projectId):

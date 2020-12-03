@@ -1,4 +1,5 @@
-from src import workerServer,utils,sqlsession,models#,utilsfordocker
+from src import workerServer,utils,sqlsession,models,schema
+import json
 import time
 import docker
 from concurrent.futures import ThreadPoolExecutor
@@ -18,7 +19,62 @@ from concurrent.futures import ThreadPoolExecutor
 # ses=sqlsession.session
 # ses.query(models.Build).filter(models.Build.buildId==29).delete()
 # ses.commit()
-utils.getPullRequests('google','gson')
+# utils.getPullRequests('google','gson')
+session = sqlsession.session
+def CommitCoverageQuery(sha):
+    bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
+    query = "{testcases(buildId:7){signature coverage{line{lineId lineNumber sourceName}}}}"
+    result = schema.dataschema.execute(query, context_value={'session': session})
+    d = json.dumps(result.data)
+    session.remove()
+    return '{}'.format(d)
+def CommitCoverageQuery1(sha):
+    bId = session.execute('select buildId from build where commitId=\'' + sha + '\'').fetchone()[0]
+    #query = "{builds(buildId:"+str(bId)+"){testcase{signature sourceName coverage{line{lineId lineNumber sourceName}}}}}"
+    tcases=session.execute('select testcaseId from testcase where buildId='+str(bId)+'').fetchall()
+    res={}
+    testcases=[]
+    for t in tcases:
+        j1={}
+        j1['testcaseId']=t[0]
+        j2=[]
+        coverage=session.execute('SELECT line.lineId,lineNumber,sourceName FROM coverage LEFT JOIN line on coverage.lineId=line.lineId where testcaseId='+str(t[0])).fetchall()
+        for c in coverage:
+            #print(c[0])
+            j3={'lineId':c[0],"lineNumber":c[1],'sourceName':c[2]}
+            j4={'line':j3}
+            j2.append(j4)
+        j1['coverage']=j2
+        testcases.append(j1)
+    res['testcases']=testcases
+    return res
+def BatchQuery1():
+    tcases=[]
+    res={}
+    for t in tcases:
+        testinfo={}
+        coverage=[]
+        coverageres=session.execute('SELECT line.lineId,lineNumber,sourceName FROM coverage LEFT JOIN line on coverage.lineId=line.lineId where testcaseId='+str(t)).fetchall()
+        for c in coverageres:
+            cov={'lineId':c[0],"lineNumber":c[1],'sourceName':c[2]}
+            outercov={'line':cov}
+            coverage.append(outercov)
+        testinfo['coverage']=coverage
+        otherinfo=session.execute('select sourceName,passed,signature from testcase where testcaseId='+str(t)).fetchone()[0]
+        testinfo['sourceName']=otherinfo[0]
+        testinfo['passed']=otherinfo[1]
+        testinfo['signature']=otherinfo[2]
+        res['t'+str(t)]=testinfo
+    return res
+#tcases=session.execute('select testcaseId,signature,sourceName from testcase where buildId='+'226').fetchall()
+import time
+t1=time.time()
+#print(type(tcases[0]),tcases[0])
+CommitCoverageQuery('89580cc3d25d0d89ac1f46b349e5cd315883dc79')
+print(time.time()-t1)
+t2=time.time()
+CommitCoverageQuery1('89580cc3d25d0d89ac1f46b349e5cd315883dc79')
+print(time.time()-t2)
 #print()
 #utilsfordocker.database_operation(74,246,'/home/dongxinxiang/tacoco/tacoco_output/mid_example-cov-matrix.json')
 #utils.getAllCommits()
