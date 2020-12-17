@@ -19,11 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="update some api and utils">
+    <list default="true" id="af2390d7-c0a3-40d7-a7a3-9053fc6e6410" name="Default Changelist" comment="improve query speed">
+      <change afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workerServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/workerServer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.sh" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,21 +247,7 @@
       <workItem from="1602277292745" duration="272000" />
       <workItem from="1602279475842" duration="18399000" />
       <workItem from="1604595846241" duration="18086000" />
-      <workItem from="1606760780272" duration="10276000" />
-    </task>
-    <task id="LOCAL-00010" summary="docker integrated">
-      <created>1595201389072</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1595201389072</updated>
-    </task>
-    <task id="LOCAL-00011" summary="docker integrated">
-      <created>1595864999003</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1595864999003</updated>
+      <workItem from="1606760780272" duration="13580000" />
     </task>
     <task id="LOCAL-00012" summary="docker integrated">
       <created>1595869310016</created>
@@ -593,7 +578,21 @@
       <option name="project" value="LOCAL" />
       <updated>1603419001611</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="improve query speed">
+      <created>1607021632497</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1607021632497</updated>
+    </task>
+    <task id="LOCAL-00060" summary="improve query speed">
+      <created>1607021694478</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1607021694478</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +612,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="version demo" />
     <MESSAGE value="added webhook" />
     <MESSAGE value="branch for frontend" />
     <MESSAGE value="docker integrated" />
@@ -638,41 +636,42 @@
     <MESSAGE value="add cfgreader.py" />
     <MESSAGE value="add docker container check" />
     <MESSAGE value="update some api and utils" />
-    <option name="LAST_COMMIT_MESSAGE" value="update some api and utils" />
+    <MESSAGE value="improve query speed" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve query speed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="720" y="201" key="FileChooserDialogImpl" timestamp="1605289543568">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="720" y="201" key="FileChooserDialogImpl/65.24.1853.864@65.24.1853.864" timestamp="1605289543568" />
-    <state width="990" height="302" key="GridCell.Tab.0.bottom" timestamp="1607021157914">
+    <state width="990" height="302" key="GridCell.Tab.0.bottom" timestamp="1607102789532">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="990" height="302" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1607021157914" />
+    <state width="990" height="302" key="GridCell.Tab.0.bottom/65.24.1853.864@65.24.1853.864" timestamp="1607102789532" />
     <state width="992" height="191" key="GridCell.Tab.0.bottom/65.24.1853.867@65.24.1853.867" timestamp="1604422019941" />
-    <state width="990" height="302" key="GridCell.Tab.0.center" timestamp="1607021157913">
+    <state width="990" height="302" key="GridCell.Tab.0.center" timestamp="1607102789531">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="990" height="302" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1607021157913" />
+    <state width="990" height="302" key="GridCell.Tab.0.center/65.24.1853.864@65.24.1853.864" timestamp="1607102789531" />
     <state width="992" height="191" key="GridCell.Tab.0.center/65.24.1853.867@65.24.1853.867" timestamp="1604422019940" />
-    <state width="990" height="302" key="GridCell.Tab.0.left" timestamp="1607021157912">
+    <state width="990" height="302" key="GridCell.Tab.0.left" timestamp="1607102789530">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="990" height="302" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1607021157912" />
+    <state width="990" height="302" key="GridCell.Tab.0.left/65.24.1853.864@65.24.1853.864" timestamp="1607102789530" />
     <state width="992" height="191" key="GridCell.Tab.0.left/65.24.1853.867@65.24.1853.867" timestamp="1604422019940" />
-    <state width="990" height="302" key="GridCell.Tab.0.right" timestamp="1607021157913">
+    <state width="990" height="302" key="GridCell.Tab.0.right" timestamp="1607102789531">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state width="990" height="302" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1607021157913" />
+    <state width="990" height="302" key="GridCell.Tab.0.right/65.24.1853.864@65.24.1853.864" timestamp="1607102789531" />
     <state width="992" height="191" key="GridCell.Tab.0.right/65.24.1853.867@65.24.1853.867" timestamp="1604422019941" />
     <state x="515" y="78" key="SettingsEditor" timestamp="1598913656173">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
     <state x="515" y="78" key="SettingsEditor/65.24.1853.864@65.24.1853.864" timestamp="1598913656173" />
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1604599067058">
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1607021703897">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
-    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1604599067058" />
+    <state x="591" y="178" width="800" height="528" key="Vcs.Push.Dialog.v2/65.24.1853.864@65.24.1853.864" timestamp="1607021703897" />
     <state x="164" y="96" width="1655" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603416242828">
       <screen x="65" y="24" width="1853" height="864" />
     </state>
@@ -686,7 +685,7 @@
     <SUITE FILE_PATH="coverage/spidersense_worker$utilsfordocker.coverage" NAME="utilsfordocker Coverage Results" MODIFIED="1597274122846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/spidersense_worker$initial.coverage" NAME="initial Coverage Results" MODIFIED="1607018166681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/spidersense_worker$worker_server.coverage" NAME="workerServer Coverage Results" MODIFIED="1594164393177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/spidersense_worker$run.coverage" NAME="run Coverage Results" MODIFIED="1607021157897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/spidersense_worker$run.coverage" NAME="run Coverage Results" MODIFIED="1607102789508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$workerServer.coverage" NAME="workerServer Coverage Results" MODIFIED="1606763974709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/spidersense_worker$buildProj.coverage" NAME="buildProj Coverage Results" MODIFIED="1595026586885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
